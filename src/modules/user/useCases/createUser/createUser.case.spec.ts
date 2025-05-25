@@ -54,6 +54,6 @@ describe('Create User', () => {
           name: 'vitor',
           password: '123123'
         })
-    ).rejects.toThrowError(UserWithSameEmailException);
+    ).rejects.toThrow(UserWithSameEmailException);
   });
 });

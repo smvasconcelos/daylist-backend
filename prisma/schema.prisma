@@ -13,7 +13,8 @@ model User {
   email     String   @unique
   password  String
   createdAt DateTime
-  Note      Note[]
+  note      Note[]
+  tags      Tag[]
 }
 
 model Note {
@@ -23,4 +24,16 @@ model Note {
   createdAt   DateTime
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
+  tags        Tag[]
+}
+
+model Tag {
+  id        String   @id
+  title     String
+  color     String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  note      Note?    @relation(fields: [noteId], references: [id])
+  noteId    String?
+  createdAt DateTime
 }
