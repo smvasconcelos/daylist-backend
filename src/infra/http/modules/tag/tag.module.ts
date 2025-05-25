@@ -6,6 +6,7 @@ import { DeleteTagUseCase } from 'src/modules/tag/useCases/deleteTag/deleteTag.c
 import { EditTagUseCase } from 'src/modules/tag/useCases/editTag/editNote.case';
 import { GetTagUseCase } from 'src/modules/tag/useCases/getTag/getTag.case';
 import { GetManyTagUseCase } from 'src/modules/tag/useCases/getMany/getMany.case';
+import { RemoveTagFromNoteUseCase } from 'src/modules/tag/useCases/removeFromNote/RemoveTagFromNoteUseCase.case';
 
 @Module({
   imports: [DatabaseModule],
@@ -15,7 +16,8 @@ import { GetManyTagUseCase } from 'src/modules/tag/useCases/getMany/getMany.case
     DeleteTagUseCase,
     EditTagUseCase,
     GetTagUseCase,
-    GetManyTagUseCase
+    GetManyTagUseCase,
+    RemoveTagFromNoteUseCase
   ]
 })
 export class TagModule {}

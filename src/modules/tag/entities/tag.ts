@@ -1,5 +1,6 @@
 import { Replace } from 'src/global/utils/replace.util';
 import { randomUUID } from 'crypto';
+import { Note } from 'src/modules/note/entities/note';
 
 interface TagProps {
   title: string;

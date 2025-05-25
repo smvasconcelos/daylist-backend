@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { NoteRepository } from '../../repositories/note.repository';
-import { NoteViewModel } from 'src/infra/http/modules/note/viewModels/noteViewModel';
+import { NoteViewModel } from 'src/infra/http/modules/note/viewModels/noteView.model';
 
 interface GetManyNoteRequest {
   userId: string;

@@ -6,9 +6,7 @@ export class TagViewModel {
       id,
       title,
       color,
-      createdAt,
-      noteId,
-      userId
+      createdAt
     };
   }
 }

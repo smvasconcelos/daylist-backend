@@ -20,6 +20,13 @@ export class PrismaNoteRepository implements NoteRepository {
     const note = await this.prisma.note.findUnique({
       where: {
         id
+      },
+      include: {
+        tags: {
+          include: {
+            tag: true
+          }
+        }
       }
     });
 
@@ -58,6 +65,13 @@ export class PrismaNoteRepository implements NoteRepository {
         skip: (page - 1) * perPage,
         where: {
           userId
+        },
+        include: {
+          tags: {
+            include: {
+              tag: true
+            }
+          }
         }
       }),
       this.prisma.note.count()

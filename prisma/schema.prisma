@@ -13,27 +13,36 @@ model User {
   email     String   @unique
   password  String
   createdAt DateTime
-  note      Note[]
-  tags      Tag[]
+  Note      Note[]
+  Tag       Tag[]
 }
 
 model Note {
-  id          String   @id
+  id          String    @id
   title       String
   description String?
   createdAt   DateTime
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
-  tags        Tag[]
+  tags        NoteTag[]
 }
 
 model Tag {
-  id        String   @id
+  id        String    @id
   title     String
   color     String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
   userId    String
-  note      Note?    @relation(fields: [noteId], references: [id])
-  noteId    String?
   createdAt DateTime
+  notes     NoteTag[]
+}
+
+model NoteTag {
+  note   Note   @relation(fields: [noteId], references: [id], onDelete: Cascade)
+  noteId String
+
+  tag   Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  tagId String
+
+  @@id([noteId, tagId])
 }
