@@ -23,7 +23,7 @@ export class GetNoteUseCase {
 
     if (note.userId !== userId)
       throw new NoteWithoutPermissionException({
-        actionName: 'recuperar'
+        actionName: 'view'
       });
 
     return note;

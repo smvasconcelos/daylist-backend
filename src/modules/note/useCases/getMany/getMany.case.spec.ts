@@ -1,8 +1,7 @@
 import { makeUser } from 'src/modules/user/factories/user.factory';
-import { NoteRepositoryInMemory } from '../../repositories/note.repository.memory';
 import { makeNote } from '../../factories/note.factory';
+import { NoteRepositoryInMemory } from '../../repositories/note.repository.memory';
 import { GetManyNoteUseCase } from './getMany.case';
-import { Note } from '../../entities/note';
 
 let noteRepositoryInMemory: NoteRepositoryInMemory;
 let getManyNoteUseCase: GetManyNoteUseCase;
@@ -68,22 +67,24 @@ describe('Get many Note', () => {
 
     noteRepositoryInMemory.notes = notes;
 
-    let result: Note[];
-
-    result = await getManyNoteUseCase.execute({
-      userId: user.id,
+    const { notes: result } = await getManyNoteUseCase.execute({
       perPage: '5',
-      page: '2'
+      page: '2',
+      userId: user.id
     });
+
+    if (!result) return false;
 
     expect(result[0].title).toEqual('page 2');
 
-    result = await getManyNoteUseCase.execute({
+    const { notes: result2 } = await getManyNoteUseCase.execute({
       userId: user.id,
       perPage: '5',
       page: '1'
     });
 
-    expect(result[0].title).toEqual('page 1');
+    if (!result2) return false;
+
+    expect(result2[0].title).toEqual('page 1');
   });
 });

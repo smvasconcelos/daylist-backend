@@ -23,7 +23,7 @@ export class DeleteNoteUseCase {
 
     if (note.userId !== userId)
       throw new NoteWithoutPermissionException({
-        actionName: 'deletar'
+        actionName: 'delete'
       });
 
     await this.noteRepository.delete(noteId);

@@ -14,8 +14,8 @@ describe('Create Note', () => {
     expect(noteRepositoryInMemory.notes).toEqual([]);
 
     const note = await createNoteUseCase.execute({
-      title: 'Dar like no video',
-      userId: '123123',
+      title: 'Test',
+      userId: '123123'
     });
 
     expect(noteRepositoryInMemory.notes).toEqual([note]);

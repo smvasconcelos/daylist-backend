@@ -21,7 +21,7 @@ export class EditNoteUseCase {
 
     if (note.userId !== userId)
       throw new NoteWithoutPermissionException({
-        actionName: 'editar'
+        actionName: 'edit'
       });
 
     note.title = title;

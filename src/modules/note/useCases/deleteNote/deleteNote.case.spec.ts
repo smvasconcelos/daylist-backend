@@ -36,7 +36,7 @@ describe('Delete Note', () => {
         noteId: 'fakeId',
         userId: 'fakeId'
       });
-    }).rejects.toThrowError(NoteNotFoundException);
+    }).rejects.toThrow(NoteNotFoundException);
   });
 
   it('Should be able to throw error when note has another user', async () => {
@@ -49,6 +49,6 @@ describe('Delete Note', () => {
         noteId: note.id,
         userId: 'fakeId'
       });
-    }).rejects.toThrowError(NoteWithoutPermissionException);
+    }).rejects.toThrow(NoteWithoutPermissionException);
   });
 });
