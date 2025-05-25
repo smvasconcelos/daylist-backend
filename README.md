@@ -1,8 +1,6 @@
-<center>
-  <h1>
-    Daylist
-  </h1>
-</center>
+<h1 style="text-align: center;">
+  Daylist
+</h1>
 
 <p style="display: flex; gap: 10px; justify-content: center;">
   <img alt="Node" src="https://img.shields.io/badge/node-nest-maroon"  />
