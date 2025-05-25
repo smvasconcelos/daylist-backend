@@ -3,7 +3,7 @@ import { TagRepositoryInMemory } from '../../repositories/tag.repository.memory'
 import { makeTag } from '../../factories/tag.factory';
 import { TagNotFoundException } from '../../exceptions/tagNotFound.exception';
 import { TagWithoutPermissionException } from '../../exceptions/tagWithoutPermission.exception';
-import { EditTagUseCase } from './editNote.case';
+import { EditTagUseCase } from './editTag.case';
 
 let tagRepositoryInMemory: TagRepositoryInMemory;
 let editTagUseCase: EditTagUseCase;
