@@ -1,4 +1,4 @@
-import { User } from '../../../../modules/user/entities/User';
+import { User } from '../../../../modules/user/entities/user';
 import { User as UserRaw } from '@prisma/client';
 
 export class PrismaUserMapper {
@@ -8,7 +8,7 @@ export class PrismaUserMapper {
       email,
       name,
       password,
-      id,
+      id
     };
   }
 
@@ -18,9 +18,9 @@ export class PrismaUserMapper {
         createdAt,
         email,
         name,
-        password,
+        password
       },
-      id,
+      id
     );
   }
 }

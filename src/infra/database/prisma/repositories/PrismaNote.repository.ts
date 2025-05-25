@@ -1,7 +1,7 @@
-import { Note } from 'src/modules/note/entities/Note';
+import { Note } from 'src/modules/note/entities/note';
 import { NoteRepository } from 'src/modules/note/repositories/note.repository';
 import { PrismaService } from '../prisma.service';
-import { PrismaNoteMapper } from '../mappers/PrismaNote.mapper';
+import { PrismaNoteMapper } from '../mappers/prismaNote.mapper';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -12,15 +12,15 @@ export class PrismaNoteRepository implements NoteRepository {
     const noteRaw = PrismaNoteMapper.toPrisma(note);
 
     await this.prisma.note.create({
-      data: noteRaw,
+      data: noteRaw
     });
   }
 
   async findById(id: string): Promise<Note | null> {
     const note = await this.prisma.note.findUnique({
       where: {
-        id,
-      },
+        id
+      }
     });
 
     if (!note) return null;
@@ -31,8 +31,8 @@ export class PrismaNoteRepository implements NoteRepository {
   async delete(id: string): Promise<void> {
     await this.prisma.note.delete({
       where: {
-        id,
-      },
+        id
+      }
     });
   }
 
@@ -42,21 +42,30 @@ export class PrismaNoteRepository implements NoteRepository {
     await this.prisma.note.update({
       data: noteRaw,
       where: {
-        id: noteRaw.id,
-      },
+        id: noteRaw.id
+      }
     });
   }
 
   async findManyByUserId(
     userId: string,
     page: number,
-    perPage: number,
-  ): Promise<Note[]> {
-    const notes = await this.prisma.note.findMany({
-      take: perPage,
-      skip: (page - 1) * perPage,
-    });
+    perPage: number
+  ): Promise<{ notes: Note[]; total: number }> {
+    const [notes, total] = await Promise.all([
+      this.prisma.note.findMany({
+        take: perPage,
+        skip: (page - 1) * perPage,
+        where: {
+          userId
+        }
+      }),
+      this.prisma.note.count()
+    ]);
 
-    return notes.map(PrismaNoteMapper.toDomain);
+    return {
+      total,
+      notes: notes.map(PrismaNoteMapper.toDomain)
+    };
   }
 }

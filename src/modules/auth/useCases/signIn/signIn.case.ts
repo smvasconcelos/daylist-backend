@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { User } from 'src/modules/user/entities/User';
-import { UserPayload } from '../../models/UserPayload.model';
+import { User } from 'src/modules/user/entities/user';
+import { UserPayload } from '../../models/userPayload.model';
 import { JwtService } from '@nestjs/jwt';
 
 interface SignInRequest {
@@ -16,7 +16,7 @@ export class SignInUseCase {
       sub: user.id,
       email: user.email,
       name: user.name,
-      createdAt: user.createdAt.toJSON(),
+      createdAt: user.createdAt.toJSON()
     };
 
     const jwtToken = this.jwtService.sign(payload);

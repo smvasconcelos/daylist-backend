@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { NoteRepository } from '../../repositories/note.repository';
-import { NoteNotFoundException } from '../../exceptions/NoteNotFound.exception';
-import { NoteWithoutPermissionException } from '../../exceptions/NoteWithoutPermission.exception';
+import { NoteNotFoundException } from '../../exceptions/noteNotFound.exception';
+import { NoteWithoutPermissionException } from '../../exceptions/noteWithoutPermission.exception';
 
 interface EditNoteRequest {
   title: string;
@@ -21,7 +21,7 @@ export class EditNoteUseCase {
 
     if (note.userId !== userId)
       throw new NoteWithoutPermissionException({
-        actionName: 'editar',
+        actionName: 'editar'
       });
 
     note.title = title;

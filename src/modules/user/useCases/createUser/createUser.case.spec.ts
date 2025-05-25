@@ -1,8 +1,8 @@
 import { compare } from 'bcrypt';
-import { UserRepositoryInMemory } from '../../repositories/User.repository.memory';
+import { UserRepositoryInMemory } from '../../repositories/user.repository.memory';
 import { CreateUserUseCase } from './createUser.case';
 import { makeUser } from '../../factories/user.factory';
-import { UserWithSameEmailException } from '../../exceptions/UserWithSameEmail.exception';
+import { UserWithSameEmailException } from '../../exceptions/userWithSameEmail.exception';
 
 let createUserUseCase: CreateUserUseCase;
 let userRepositoryInMemory: UserRepositoryInMemory;
@@ -19,7 +19,7 @@ describe('Create User', () => {
     const user = await createUserUseCase.execute({
       email: 'email@email.com',
       name: 'Vitor',
-      password: '123123',
+      password: '123123'
     });
 
     expect(userRepositoryInMemory.users).toEqual([user]);
@@ -31,12 +31,12 @@ describe('Create User', () => {
     const user = await createUserUseCase.execute({
       email: 'email@email.com',
       name: 'Vitor',
-      password: userPasswordWithoutEncryption,
+      password: userPasswordWithoutEncryption
     });
 
     const userHasPasswordEncrypted = await compare(
       userPasswordWithoutEncryption,
-      user.password,
+      user.password
     );
 
     expect(userHasPasswordEncrypted).toBeTruthy();
@@ -52,8 +52,8 @@ describe('Create User', () => {
         await createUserUseCase.execute({
           email: user.email,
           name: 'vitor',
-          password: '123123',
-        }),
+          password: '123123'
+        })
     ).rejects.toThrowError(UserWithSameEmailException);
   });
 });

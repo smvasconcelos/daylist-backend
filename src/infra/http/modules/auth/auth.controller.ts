@@ -5,12 +5,12 @@ import {
   HttpStatus,
   Post,
   Request,
-  UseGuards,
+  UseGuards
 } from '@nestjs/common';
 import { AuthRequestModel } from './models/authRequest.model';
 import { SignInUseCase } from '../../../../modules/auth/useCases/signIn/signIn.case';
-import { LocalAuthGuard } from './guards/LocalAuth.guard';
-import { Public } from './decorators/IsPublic';
+import { LocalAuthGuard } from './guards/localAuth.guard';
+import { Public } from './decorators/isPublic';
 
 @Controller()
 export class AuthController {
@@ -22,7 +22,7 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   async signIn(@Request() request: AuthRequestModel) {
     const access_token = await this.signInUseCase.execute({
-      user: request.user,
+      user: request.user
     });
 
     return { access_token };

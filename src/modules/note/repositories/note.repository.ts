@@ -1,4 +1,4 @@
-import { Note } from '../entities/Note';
+import { Note } from '../entities/note';
 
 export abstract class NoteRepository {
   abstract create(note: Note): Promise<void>;
@@ -8,6 +8,9 @@ export abstract class NoteRepository {
   abstract findManyByUserId(
     userId: string,
     page: number,
-    perPage: number,
-  ): Promise<Note[]>;
+    perPage: number
+  ): Promise<{
+    notes: Note[] | null;
+    total: number;
+  }>;
 }

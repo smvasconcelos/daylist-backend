@@ -2,9 +2,9 @@ import {
   isEmail,
   registerDecorator,
   ValidationArguments,
-  ValidationOptions,
+  ValidationOptions
 } from 'class-validator';
-import { ExceptionMessage } from '../data/ExceptionsMessage';
+import { ExceptionMessage } from '../data/exceptionsMessage';
 
 export function IsEmailCustom(validationOptions?: ValidationOptions) {
   return function (object: NonNullable<unknown>, propertyName: string) {
@@ -20,8 +20,8 @@ export function IsEmailCustom(validationOptions?: ValidationOptions) {
         },
         defaultMessage(validationArguments: ValidationArguments) {
           return ExceptionMessage.IsEmail(validationArguments.property);
-        },
-      },
+        }
+      }
     });
   };
 }

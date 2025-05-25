@@ -1,10 +1,10 @@
-import { User } from 'src/modules/user/entities/User';
+import { User } from 'src/modules/user/entities/user';
 import { ValidateUserUseCase } from './validateUser.case';
-import { UserRepositoryInMemory } from 'src/modules/user/repositories/User.repository.memory';
+import { UserRepositoryInMemory } from 'src/modules/user/repositories/user.repository.memory';
 import { hash } from 'bcrypt';
 import { makeUser } from 'src/modules/user/factories/user.factory';
 import { UnauthorizedException } from '@nestjs/common';
-import { AuthValuesIncorrectException } from '../../exceptions/AuthValuesIncorrect.exception';
+import { AuthValuesIncorrectException } from '../../exceptions/authValuesIncorrect.exception';
 
 let validateUserUseCase: ValidateUserUseCase;
 let userRepositoryInMemory: UserRepositoryInMemory;
@@ -19,14 +19,14 @@ describe('Validate User', () => {
     const userPasswordWithoutEncryption = '123123';
 
     const user = makeUser({
-      password: await hash(userPasswordWithoutEncryption, 10),
+      password: await hash(userPasswordWithoutEncryption, 10)
     });
 
     userRepositoryInMemory.users = [user];
 
     const result = await validateUserUseCase.execute({
       email: user.email,
-      password: userPasswordWithoutEncryption,
+      password: userPasswordWithoutEncryption
     });
 
     expect(result).toEqual(user);
@@ -36,7 +36,7 @@ describe('Validate User', () => {
     const userPasswordWithoutEncryption = '123123';
 
     const user = makeUser({
-      password: await hash(userPasswordWithoutEncryption, 10),
+      password: await hash(userPasswordWithoutEncryption, 10)
     });
 
     userRepositoryInMemory.users = [user];
@@ -44,14 +44,14 @@ describe('Validate User', () => {
     expect(async () => {
       await validateUserUseCase.execute({
         email: 'incorrect@gmail.com',
-        password: userPasswordWithoutEncryption,
+        password: userPasswordWithoutEncryption
       });
     }).rejects.toThrow(AuthValuesIncorrectException);
 
     expect(async () => {
       await validateUserUseCase.execute({
         email: user.email,
-        password: 'incorrect password',
+        password: 'incorrect password'
       });
     }).rejects.toThrow(AuthValuesIncorrectException);
   });

@@ -2,8 +2,8 @@ import { makeUser } from 'src/modules/user/factories/user.factory';
 import { NoteRepositoryInMemory } from '../../repositories/note.repository.memory';
 import { makeNote } from '../../factories/note.factory';
 import { GetNoteUseCase } from './getNote.case';
-import { NoteNotFoundException } from '../../exceptions/NoteNotFound.exception';
-import { NoteWithoutPermissionException } from '../../exceptions/NoteWithoutPermission.exception';
+import { NoteNotFoundException } from '../../exceptions/noteNotFound.exception';
+import { NoteWithoutPermissionException } from '../../exceptions/noteWithoutPermission.exception';
 
 let noteRepositoryInMemory: NoteRepositoryInMemory;
 let getNoteUseCase: GetNoteUseCase;
@@ -22,7 +22,7 @@ describe('Get Note', () => {
 
     const result = await getNoteUseCase.execute({
       noteId: note.id,
-      userId: user.id,
+      userId: user.id
     });
 
     expect(result).toEqual(note);
@@ -32,7 +32,7 @@ describe('Get Note', () => {
     expect(async () => {
       await getNoteUseCase.execute({
         noteId: 'fakeId',
-        userId: 'fakeId',
+        userId: 'fakeId'
       });
     }).rejects.toThrowError(NoteNotFoundException);
   });
@@ -45,7 +45,7 @@ describe('Get Note', () => {
     expect(async () => {
       await getNoteUseCase.execute({
         noteId: note.id,
-        userId: 'fakeId',
+        userId: 'fakeId'
       });
     }).rejects.toThrowError(NoteWithoutPermissionException);
   });

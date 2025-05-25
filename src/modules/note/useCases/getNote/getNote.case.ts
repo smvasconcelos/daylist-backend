@@ -1,11 +1,11 @@
 import {
   Injectable,
   NotFoundException,
-  UnauthorizedException,
+  UnauthorizedException
 } from '@nestjs/common';
 import { NoteRepository } from '../../repositories/note.repository';
-import { NoteNotFoundException } from '../../exceptions/NoteNotFound.exception';
-import { NoteWithoutPermissionException } from '../../exceptions/NoteWithoutPermission.exception';
+import { NoteNotFoundException } from '../../exceptions/noteNotFound.exception';
+import { NoteWithoutPermissionException } from '../../exceptions/noteWithoutPermission.exception';
 
 interface GetNoteRequest {
   noteId: string;
@@ -23,7 +23,7 @@ export class GetNoteUseCase {
 
     if (note.userId !== userId)
       throw new NoteWithoutPermissionException({
-        actionName: 'recuperar',
+        actionName: 'recuperar'
       });
 
     return note;
