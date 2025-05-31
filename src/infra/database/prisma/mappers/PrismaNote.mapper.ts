@@ -1,6 +1,7 @@
-import { Note as NoteRaw, NoteTag, Tag } from '@prisma/client';
+import { Note as NoteRaw, NoteTag, Tag, Task } from '@prisma/client';
 import { Note } from 'src/modules/note/entities/note';
 import { PrismaTagMapper } from './prismaTag.mapper';
+import { PrismaTaskMapper } from './prismaTask.mapper';
 
 export class PrismaNoteMapper {
   static toPrisma({
@@ -25,15 +26,17 @@ export class PrismaNoteMapper {
     id,
     title,
     userId,
-    tags
-  }: NoteRaw & { tags?: (NoteTag & { tag: Tag })[] }): Note {
+    tags,
+    tasks
+  }: NoteRaw & { tags?: (NoteTag & { tag: Tag })[]; tasks?: Task[] }): Note {
     return new Note(
       {
         createdAt,
         description,
         title,
         userId,
-        tags: tags?.map(noteTag => PrismaTagMapper.toDomain(noteTag.tag))
+        tags: tags?.map(noteTag => PrismaTagMapper.toDomain(noteTag.tag)),
+        tasks: tasks?.map(PrismaTaskMapper.toDomain)
       },
       id
     );
