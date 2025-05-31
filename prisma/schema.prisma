@@ -3,8 +3,28 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+enum Recurrence {
+  NONE
+  HOURLY
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+  CUSTOM
+}
+
+enum DayOfWeek {
+  SUNDAY
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
 }
 
 model User {
@@ -25,6 +45,31 @@ model Note {
   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
   tags        NoteTag[]
+  tasks       Task[]
+}
+
+model Task {
+  id     String @id @default(uuid())
+  note   Note   @relation(fields: [noteId], references: [id], onDelete: Cascade)
+  noteId String
+
+  startDate       DateTime
+  endDate         DateTime?
+  durationMinutes Int
+  recurrenceType  Recurrence
+  daysOfWeek      DayOfWeek[] @default([])
+  timesOfDay      String[]    @default([])
+
+  occurrences TaskOccurrence[]
+}
+
+model TaskOccurrence {
+  id     String @id @default(uuid())
+  task   Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  taskId String
+
+  date      DateTime
+  checkedAt DateTime
 }
 
 model Tag {
