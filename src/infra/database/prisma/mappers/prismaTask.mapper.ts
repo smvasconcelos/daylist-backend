@@ -1,5 +1,10 @@
-import { TaskOccurrence, Task as TaskRaw } from '@prisma/client';
+import {
+  Task as TaskRaw,
+  TaskOccurrence as TaskOccurrenceRaw
+} from '@prisma/client';
 import { Task } from 'src/modules/task/entities/task';
+import { TaskOccurrence } from 'src/modules/task/entities/taskOcurrence';
+import { PrismaTaskOccurrenceMapper } from './prismaTaskOccurrence.mapper';
 
 export class PrismaTaskMapper {
   static toPrisma({
@@ -25,7 +30,7 @@ export class PrismaTaskMapper {
       id,
       noteId: noteId ?? null,
       recurrenceType: recurrenceType ?? 'NONE',
-      startDate,
+      startDate: startDate ?? null,
       timesOfDay: timesOfDay ?? [],
       title,
       userId
@@ -46,12 +51,12 @@ export class PrismaTaskMapper {
     createdAt,
     userId,
     occurrences
-  }: TaskRaw & { occurrences?: TaskOccurrence[] }): Task {
+  }: TaskRaw & { occurrences?: TaskOccurrenceRaw[] }): Task {
     return new Task(
       {
         daysOfWeek,
         createdAt,
-        occurrences,
+        occurrences: occurrences?.map(PrismaTaskOccurrenceMapper.toDomain),
         userId,
         description: description ?? undefined,
         durationMinutes,

@@ -9,7 +9,6 @@ datasource db {
 
 enum Recurrence {
   NONE
-  HOURLY
   DAILY
   WEEKLY
   MONTHLY
@@ -58,7 +57,7 @@ model Task {
 
   title           String
   description     String?
-  startDate       DateTime
+  startDate       DateTime?
   endDate         DateTime?
   durationMinutes Int
   recurrenceType  Recurrence
@@ -74,7 +73,10 @@ model TaskOccurrence {
   task   Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
   taskId String
 
-  date      DateTime
+  recurrenceType Recurrence
+  dayOfWeek      DayOfWeek?
+  timeOfDay      String?
+
   checkedAt DateTime
 }
 

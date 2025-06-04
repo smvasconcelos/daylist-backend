@@ -3,6 +3,10 @@ import { Task } from 'src/modules/task/entities/task';
 import { TaskRepository } from 'src/modules/task/repositories/task.repository';
 import { PrismaTaskMapper } from '../mappers/prismaTask.mapper';
 import { PrismaService } from '../prisma.service';
+import { CreateTaskOcurrenceUseCaseProps } from 'src/modules/task/useCases/createTaskOcurrenceUseCase/createTaskOcurrenceUseCase.case';
+import { PrismaTaskOccurrenceMapper } from '../mappers/prismaTaskOccurrence.mapper';
+import { randomUUID } from 'crypto';
+import { TaskOccurrence } from 'src/modules/task/entities/taskOcurrence';
 
 @Injectable()
 export class PrismaTaskRepository implements TaskRepository {
@@ -52,6 +56,21 @@ export class PrismaTaskRepository implements TaskRepository {
     await this.prisma.task.update({
       where: { id: taskRaw.id },
       data: taskRaw
+    });
+  }
+
+  async createTaskOcurrence(
+    props: CreateTaskOcurrenceUseCaseProps
+  ): Promise<void> {
+    const taskOcurrenceRaw = PrismaTaskOccurrenceMapper.toPrisma(
+      new TaskOccurrence({
+        ...props,
+        id: randomUUID()
+      })
+    );
+
+    await this.prisma.taskOccurrence.create({
+      data: taskOcurrenceRaw
     });
   }
 

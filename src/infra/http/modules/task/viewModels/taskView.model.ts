@@ -1,4 +1,5 @@
 import { Task, TaskProps } from 'src/modules/task/entities/task';
+import { TaskOccurrenceViewModel } from './taskOccurrenceView.model';
 
 export class TaskViewModel {
   static toHtpp({
@@ -30,6 +31,8 @@ export class TaskViewModel {
       timesOfDay,
       userId,
       occurrences: occurrences
+        ? occurrences.map(TaskOccurrenceViewModel.toHtpp)
+        : undefined
     };
   }
 }

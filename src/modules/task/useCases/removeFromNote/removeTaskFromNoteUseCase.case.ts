@@ -5,7 +5,7 @@ import { TaskRepository } from '../../repositories/task.repository';
 import { NoteRepository } from 'src/modules/note/repositories/note.repository';
 import { NoteNotFoundException } from 'src/modules/note/exceptions/noteNotFound.exception';
 
-interface DeleteTaskRequest {
+interface CreateTaskOcurrenceRequest {
   taskId: string;
   userId: string;
   noteId: string;
@@ -18,7 +18,7 @@ export class RemoveTaskFromNoteUseCase {
     private noteRepository: NoteRepository
   ) {}
 
-  async execute({ taskId, userId, noteId }: DeleteTaskRequest) {
+  async execute({ taskId, userId, noteId }: CreateTaskOcurrenceRequest) {
     const task = await this.taskRepository.findById(taskId);
 
     if (!task) throw new TaskNotFoundException();

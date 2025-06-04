@@ -1,4 +1,5 @@
 import { Task } from '../entities/task';
+import { CreateTaskOcurrenceUseCaseProps } from '../useCases/createTaskOcurrenceUseCase/createTaskOcurrenceUseCase.case';
 import { TaskRepository } from './task.repository';
 
 export class TaskRepositoryInMemory implements TaskRepository {
@@ -57,4 +58,8 @@ export class TaskRepositoryInMemory implements TaskRepository {
       return item.noteId !== item.noteId && item.id !== taskId;
     });
   }
+
+  async createTaskOcurrence(
+    props: CreateTaskOcurrenceUseCaseProps
+  ): Promise<void> {}
 }

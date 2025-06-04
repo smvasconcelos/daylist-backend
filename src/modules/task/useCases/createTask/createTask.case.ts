@@ -4,6 +4,7 @@ import { NoteNotFoundException } from 'src/modules/note/exceptions/noteNotFound.
 import { NoteRepository } from 'src/modules/note/repositories/note.repository';
 import { Task } from '../../entities/task';
 import { TaskRepository } from '../../repositories/task.repository';
+import { TaskInvalidConfiguration } from '../../exceptions/invalidTaskConfiguration.exception';
 
 interface CreateTaskRequest {
   title: string;
@@ -43,6 +44,15 @@ export class CreateTaskUseCase {
       if (!note) {
         throw new NoteNotFoundException();
       }
+    }
+
+    // Can only set days of week when ocurrence is CUSTOM
+    if (
+      daysOfWeek &&
+      Array.isArray(daysOfWeek) &&
+      recurrenceType !== 'CUSTOM'
+    ) {
+      throw new TaskInvalidConfiguration();
     }
 
     const task = new Task({

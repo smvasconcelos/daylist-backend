@@ -21,6 +21,8 @@ import { CreateTaskBody } from './dtos/createTaskBody.dto';
 import { RemoveTaskFromNoteUseCase } from 'src/modules/task/useCases/removeFromNote/RemoveTaskFromNoteUseCase.case';
 import { RemoveTaskFromNoteBody } from './dtos/removeTaskFromNoteBody.dto';
 import { EditTaskBody } from './dtos/editTaskBody.dto';
+import { CompleteTaskBody } from './dtos/completeTask.dto';
+import { CreateTaskOcurrenceUseCase } from 'src/modules/task/useCases/createTaskOcurrenceUseCase/createTaskOcurrenceUseCase.case';
 
 @Controller('task')
 export class TaskController {
@@ -30,7 +32,8 @@ export class TaskController {
     private editTaskUseCase: EditTaskUseCase,
     private getTaskUseCase: GetTaskUseCase,
     private getManyTaskUseCase: GetManyTaskUseCase,
-    private removeFromNote: RemoveTaskFromNoteUseCase
+    private removeFromNote: RemoveTaskFromNoteUseCase,
+    private createTaskOcurrenceUseCase: CreateTaskOcurrenceUseCase
   ) {}
 
   @Post()
@@ -87,6 +90,19 @@ export class TaskController {
       taskId,
       userId: request.user.id,
       noteId: body.noteId
+    });
+  }
+
+  @Put(':id/complete-task')
+  async completeTask(
+    @Request() request: AuthenticatedRequestModel,
+    @Param('id') taskId: string,
+    @Body() body: CompleteTaskBody
+  ) {
+    this.createTaskOcurrenceUseCase.execute({
+      ...body,
+      userId: request.user.id,
+      taskId: taskId
     });
   }
 
