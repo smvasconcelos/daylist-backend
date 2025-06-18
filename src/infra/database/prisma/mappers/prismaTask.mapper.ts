@@ -1,6 +1,7 @@
 import {
   Task as TaskRaw,
-  TaskOccurrence as TaskOccurrenceRaw
+  TaskOccurrence as TaskOccurrenceRaw,
+  DayOfWeek
 } from '@prisma/client';
 import { Task } from 'src/modules/task/entities/task';
 import { TaskOccurrence } from 'src/modules/task/entities/taskOcurrence';
@@ -38,13 +39,13 @@ export class PrismaTaskMapper {
   }
 
   static toDomain({
-    daysOfWeek,
     description,
     durationMinutes,
-    endDate,
     id,
     noteId,
+    daysOfWeek,
     recurrenceType,
+    endDate,
     startDate,
     timesOfDay,
     title,

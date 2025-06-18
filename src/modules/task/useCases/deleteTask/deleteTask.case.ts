@@ -22,6 +22,6 @@ export class DeleteTaskUseCase {
         actionName: 'delete'
       });
 
-    await this.taskRepository.delete(taskId);
+    return await this.taskRepository.delete(taskId);
   }
 }

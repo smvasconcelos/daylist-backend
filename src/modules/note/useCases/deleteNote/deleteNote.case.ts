@@ -26,6 +26,6 @@ export class DeleteNoteUseCase {
         actionName: 'delete'
       });
 
-    await this.noteRepository.delete(noteId);
+    return await this.noteRepository.delete(noteId);
   }
 }

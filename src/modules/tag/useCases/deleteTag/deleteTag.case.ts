@@ -22,6 +22,6 @@ export class DeleteTagUseCase {
         actionName: 'delete'
       });
 
-    await this.tagRepository.delete(tagId);
+    return await this.tagRepository.delete(tagId);
   }
 }

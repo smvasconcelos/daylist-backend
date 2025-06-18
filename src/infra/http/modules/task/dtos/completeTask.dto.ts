@@ -1,5 +1,5 @@
-import { DayOfWeek, Recurrence } from '@prisma/client';
-import { IsDate, IsEnum, IsOptional } from 'class-validator';
+import { DayOfWeek } from '@prisma/client';
+import { IsEnum, IsOptional } from 'class-validator';
 import { IsStringCustom } from 'src/infra/http/classValidator/decorators/isStringCustom';
 
 export class CompleteTaskBody {
@@ -11,8 +11,4 @@ export class CompleteTaskBody {
   @IsOptional()
   @IsStringCustom()
   timeOfDay?: string;
-
-  @IsStringCustom()
-  @IsEnum(Recurrence)
-  recurrenceType: Recurrence;
 }

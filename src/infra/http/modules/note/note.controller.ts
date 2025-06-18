@@ -50,7 +50,7 @@ export class NoteController {
     @Request() request: AuthenticatedRequestModel,
     @Param('id') noteId: string
   ) {
-    await this.deleteNoteUseCase.execute({
+    return await this.deleteNoteUseCase.execute({
       noteId,
       userId: request.user.id
     });
@@ -64,7 +64,7 @@ export class NoteController {
   ) {
     const { title, description } = body;
 
-    await this.editNoteUseCase.execute({
+    return await this.editNoteUseCase.execute({
       noteId,
       userId: request.user.id,
       title,

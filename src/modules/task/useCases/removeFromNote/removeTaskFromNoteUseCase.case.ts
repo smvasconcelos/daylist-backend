@@ -34,6 +34,6 @@ export class RemoveTaskFromNoteUseCase {
         actionName: 'remove-from-note'
       });
 
-    await this.taskRepository.removeFromNote(taskId, noteId);
+    return await this.taskRepository.removeFromNote(taskId, noteId);
   }
 }

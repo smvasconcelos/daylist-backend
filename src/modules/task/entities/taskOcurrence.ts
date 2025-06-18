@@ -3,11 +3,12 @@ import { Replace } from 'src/global/utils/replace.util';
 import { DayOfWeek, Recurrence } from '@prisma/client';
 
 export interface TaskOccurrenceProps {
-  id: string;
   taskId: string;
   checkedAt: Date;
   recurrenceType: Recurrence;
   dayOfWeek?: DayOfWeek | null;
+  startDate: Date;
+  endDate?: Date | null;
   timeOfDay?: string | null;
 }
 
@@ -51,8 +52,28 @@ export class TaskOccurrence {
     return this.props.recurrenceType;
   }
 
+  get startDate(): Date {
+    return this.props.startDate;
+  }
+
+  get endDate(): Date | undefined | null {
+    return this.props.endDate;
+  }
+
+  set id(id: string) {
+    this._id = id;
+  }
+
   set taskId(taskId: string) {
     this.props.taskId = taskId;
+  }
+
+  set startDate(startDate: Date) {
+    this.props.startDate = startDate;
+  }
+
+  set endDate(endDate: Date) {
+    this.props.endDate = endDate;
   }
 
   set recurrenceType(recurrenceType: Recurrence) {

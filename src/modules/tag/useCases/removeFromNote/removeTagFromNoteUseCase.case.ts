@@ -34,6 +34,6 @@ export class RemoveTagFromNoteUseCase {
         actionName: 'remove-from-note'
       });
 
-    await this.tagRepository.removeFromNote(tagId, noteId);
+    return await this.tagRepository.removeFromNote(tagId, noteId);
   }
 }

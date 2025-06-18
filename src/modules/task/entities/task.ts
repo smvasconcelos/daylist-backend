@@ -21,6 +21,8 @@ export interface TaskProps {
   occurrences?: TaskOccurrenceProps[];
 }
 
+export type CalendarView = 'DAILY' | 'WEEKLY' | 'MONTHLY';
+
 export class Task {
   private props: TaskProps;
   private _id: string;
