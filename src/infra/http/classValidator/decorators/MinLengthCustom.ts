@@ -2,13 +2,13 @@ import {
   minLength,
   registerDecorator,
   ValidationArguments,
-  ValidationOptions,
+  ValidationOptions
 } from 'class-validator';
-import { ExceptionMessage } from '../data/ExceptionsMessage';
+import { ExceptionMessage } from '../data/exceptionsMessage';
 
 export function MinLengthCustom(
   min: number,
-  validationOptions?: ValidationOptions,
+  validationOptions?: ValidationOptions
 ) {
   return function (object: NonNullable<unknown>, propertyName: string) {
     registerDecorator({
@@ -23,8 +23,8 @@ export function MinLengthCustom(
         },
         defaultMessage(validationArguments: ValidationArguments) {
           return ExceptionMessage.MinLength(min, validationArguments.property);
-        },
-      },
+        }
+      }
     });
   };
 }

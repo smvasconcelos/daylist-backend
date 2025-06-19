@@ -1,4 +1,4 @@
-import { User } from '../entities/User';
+import { User } from '../entities/user';
 
 type Override = Partial<User>;
 
@@ -8,8 +8,8 @@ export const makeUser = ({ id, ...override }: Override) => {
       email: 'email@gmail.com',
       name: 'Vitor',
       password: '123123',
-      ...override,
+      ...override
     },
-    id,
+    id
   );
 };

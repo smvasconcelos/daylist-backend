@@ -2,9 +2,9 @@ import {
   isString,
   registerDecorator,
   ValidationArguments,
-  ValidationOptions,
+  ValidationOptions
 } from 'class-validator';
-import { ExceptionMessage } from '../data/ExceptionsMessage';
+import { ExceptionMessage } from '../data/exceptionsMessage';
 
 export function IsStringCustom(validationOptions?: ValidationOptions) {
   return function (object: NonNullable<unknown>, propertyName: string) {
@@ -20,8 +20,8 @@ export function IsStringCustom(validationOptions?: ValidationOptions) {
         },
         defaultMessage(validationArguments: ValidationArguments) {
           return ExceptionMessage.IsString(validationArguments.property);
-        },
-      },
+        }
+      }
     });
   };
 }
