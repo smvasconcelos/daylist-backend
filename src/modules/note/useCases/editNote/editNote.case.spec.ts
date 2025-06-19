@@ -41,11 +41,11 @@ describe('Edit Note', () => {
   it('Should be able to throw error when not found note', async () => {
     expect(async () => {
       await editNoteUseCase.execute({
-        title: 'se inscriva de novo',
+        title: 'teste',
         noteId: 'fakeId',
         userId: 'fakeId'
       });
-    }).rejects.toThrowError(NoteNotFoundException);
+    }).rejects.toThrow(NoteNotFoundException);
   });
 
   it('Should be able to throw error when note has another user', async () => {
@@ -55,10 +55,10 @@ describe('Edit Note', () => {
 
     expect(async () => {
       await editNoteUseCase.execute({
-        title: 'se inscriva de novo',
+        title: 'teste',
         noteId: note.id,
         userId: 'fakeId'
       });
-    }).rejects.toThrowError(NoteWithoutPermissionException);
+    }).rejects.toThrow(NoteWithoutPermissionException);
   });
 });
