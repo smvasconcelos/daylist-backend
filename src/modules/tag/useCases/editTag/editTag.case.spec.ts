@@ -4,14 +4,20 @@ import { makeTag } from '../../factories/tag.factory';
 import { TagNotFoundException } from '../../exceptions/tagNotFound.exception';
 import { TagWithoutPermissionException } from '../../exceptions/tagWithoutPermission.exception';
 import { EditTagUseCase } from './editTag.case';
+import { NoteRepositoryInMemory } from 'src/modules/note/repositories/note.repository.memory';
 
 let tagRepositoryInMemory: TagRepositoryInMemory;
 let editTagUseCase: EditTagUseCase;
+let noteRepositoryInMemory: NoteRepositoryInMemory;
 
 describe('Edit Tag', () => {
   beforeEach(() => {
     tagRepositoryInMemory = new TagRepositoryInMemory();
-    editTagUseCase = new EditTagUseCase(tagRepositoryInMemory);
+    noteRepositoryInMemory = new NoteRepositoryInMemory();
+    editTagUseCase = new EditTagUseCase(
+      tagRepositoryInMemory,
+      noteRepositoryInMemory
+    );
   });
 
   it('Should be able to edit tag', async () => {

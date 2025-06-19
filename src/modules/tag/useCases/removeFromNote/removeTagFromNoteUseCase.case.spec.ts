@@ -4,15 +4,19 @@ import { TagWithoutPermissionException } from '../../exceptions/tagWithoutPermis
 import { makeTag } from '../../factories/tag.factory';
 import { TagRepositoryInMemory } from '../../repositories/tag.repository.memory';
 import { RemoveTagFromNoteUseCase } from './removeTagFromNoteUseCase.case';
+import { NoteRepositoryInMemory } from 'src/modules/note/repositories/note.repository.memory';
 
 let tagRepositoryInMemory: TagRepositoryInMemory;
+let noteRepositoryInMemory: NoteRepositoryInMemory;
 let removeTagFromNoteUseCase: RemoveTagFromNoteUseCase;
 
 describe('Remove tag from note', () => {
   beforeEach(() => {
     tagRepositoryInMemory = new TagRepositoryInMemory();
+    noteRepositoryInMemory = new NoteRepositoryInMemory();
     removeTagFromNoteUseCase = new RemoveTagFromNoteUseCase(
-      tagRepositoryInMemory
+      tagRepositoryInMemory,
+      noteRepositoryInMemory
     );
   });
 
