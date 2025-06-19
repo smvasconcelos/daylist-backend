@@ -2,7 +2,7 @@ import { makeUser } from 'src/modules/user/factories/user.factory';
 import { NoteRepositoryInMemory } from '../../repositories/note.repository.memory';
 import { makeNote } from '../../factories/note.factory';
 import { GetManyNoteUseCase } from './getMany.case';
-import { Note } from '../../entities/Note';
+import { Note } from '../../entities/note';
 
 let noteRepositoryInMemory: NoteRepositoryInMemory;
 let getManyNoteUseCase: GetManyNoteUseCase;
@@ -21,7 +21,7 @@ describe('Get many Note', () => {
     noteRepositoryInMemory.notes = notes;
 
     const result = await getManyNoteUseCase.execute({
-      userId: user.id,
+      userId: user.id
     });
 
     expect(result).toEqual(notes);
@@ -32,13 +32,13 @@ describe('Get many Note', () => {
     const user2 = makeUser({});
 
     const notes = [...new Array(10)].map((_, index) =>
-      makeNote({ userId: index < 5 ? user1.id : user2.id }),
+      makeNote({ userId: index < 5 ? user1.id : user2.id })
     );
 
     noteRepositoryInMemory.notes = notes;
 
     const result = await getManyNoteUseCase.execute({
-      userId: user1.id,
+      userId: user1.id
     });
 
     expect(result).toHaveLength(5);
@@ -53,7 +53,7 @@ describe('Get many Note', () => {
 
     const result = await getManyNoteUseCase.execute({
       userId: user.id,
-      perPage: '8',
+      perPage: '8'
     });
 
     expect(result).toHaveLength(8);
@@ -63,7 +63,7 @@ describe('Get many Note', () => {
     const user = makeUser({});
 
     const notes = [...new Array(10)].map((_, index) =>
-      makeNote({ userId: user.id, title: index < 5 ? 'page 1' : 'page 2' }),
+      makeNote({ userId: user.id, title: index < 5 ? 'page 1' : 'page 2' })
     );
 
     noteRepositoryInMemory.notes = notes;
@@ -73,7 +73,7 @@ describe('Get many Note', () => {
     result = await getManyNoteUseCase.execute({
       userId: user.id,
       perPage: '5',
-      page: '2',
+      page: '2'
     });
 
     expect(result[0].title).toEqual('page 2');
@@ -81,7 +81,7 @@ describe('Get many Note', () => {
     result = await getManyNoteUseCase.execute({
       userId: user.id,
       perPage: '5',
-      page: '1',
+      page: '1'
     });
 
     expect(result[0].title).toEqual('page 1');

@@ -1,5 +1,5 @@
 import { Note as NoteRaw } from '@prisma/client';
-import { Note } from 'src/modules/note/entities/Note';
+import { Note } from 'src/modules/note/entities/note';
 
 export class PrismaNoteMapper {
   static toPrisma({
@@ -7,14 +7,14 @@ export class PrismaNoteMapper {
     description,
     id,
     title,
-    userId,
+    userId
   }: Note): NoteRaw {
     return {
       createdAt,
       description,
       id,
       title,
-      userId,
+      userId
     };
   }
 
@@ -23,16 +23,16 @@ export class PrismaNoteMapper {
     description,
     id,
     title,
-    userId,
+    userId
   }: NoteRaw): Note {
     return new Note(
       {
         createdAt,
         description,
         title,
-        userId,
+        userId
       },
-      id,
+      id
     );
   }
 }

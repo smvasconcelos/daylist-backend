@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { NoteRepository } from '../../repositories/note.repository';
+import { NoteViewModel } from 'src/infra/http/modules/note/viewModels/noteViewModel';
 
 interface GetManyNoteRequest {
   userId: string;
@@ -18,12 +19,10 @@ export class GetManyNoteUseCase {
     const currentPage = Number(page) || DEFAULT_PAGE;
     const currentPerPage = Number(perPage) || DEFAULT_PER_PAGE;
 
-    const notes = await this.noteRepository.findManyByUserId(
+    return await this.noteRepository.findManyByUserId(
       userId,
       currentPage,
-      currentPerPage,
+      currentPerPage
     );
-
-    return notes;
   }
 }

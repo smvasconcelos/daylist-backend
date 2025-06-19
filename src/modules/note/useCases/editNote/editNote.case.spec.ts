@@ -2,8 +2,8 @@ import { makeUser } from 'src/modules/user/factories/user.factory';
 import { NoteRepositoryInMemory } from '../../repositories/note.repository.memory';
 import { makeNote } from '../../factories/note.factory';
 import { EditNoteUseCase } from './editNote.case';
-import { NoteNotFoundException } from '../../exceptions/NoteNotFound.exception';
-import { NoteWithoutPermissionException } from '../../exceptions/NoteWithoutPermission.exception';
+import { NoteNotFoundException } from '../../exceptions/noteNotFound.exception';
+import { NoteWithoutPermissionException } from '../../exceptions/noteWithoutPermission.exception';
 
 let noteRepositoryInMemory: NoteRepositoryInMemory;
 let editNoteUseCase: EditNoteUseCase;
@@ -17,7 +17,7 @@ describe('Edit Note', () => {
   it('Should be able to edit note', async () => {
     const user = makeUser({});
     const note = makeNote({
-      userId: user.id,
+      userId: user.id
     });
 
     noteRepositoryInMemory.notes = [note];
@@ -29,12 +29,12 @@ describe('Edit Note', () => {
       title: tilteChanged,
       description: descriptionChanged,
       noteId: note.id,
-      userId: user.id,
+      userId: user.id
     });
 
     expect(noteRepositoryInMemory.notes[0].title).toEqual(tilteChanged);
     expect(noteRepositoryInMemory.notes[0].description).toEqual(
-      descriptionChanged,
+      descriptionChanged
     );
   });
 
@@ -43,7 +43,7 @@ describe('Edit Note', () => {
       await editNoteUseCase.execute({
         title: 'se inscriva de novo',
         noteId: 'fakeId',
-        userId: 'fakeId',
+        userId: 'fakeId'
       });
     }).rejects.toThrowError(NoteNotFoundException);
   });
@@ -57,7 +57,7 @@ describe('Edit Note', () => {
       await editNoteUseCase.execute({
         title: 'se inscriva de novo',
         noteId: note.id,
-        userId: 'fakeId',
+        userId: 'fakeId'
       });
     }).rejects.toThrowError(NoteWithoutPermissionException);
   });

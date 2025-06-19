@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Note } from '../../entities/Note';
+import { Note } from '../../entities/note';
 import { NoteRepository } from '../../repositories/note.repository';
 
 interface CreateNoteRequest {
@@ -16,7 +16,7 @@ export class CreateNoteUseCase {
     const note = new Note({
       title,
       description,
-      userId,
+      userId
     });
 
     await this.noteRepository.create(note);

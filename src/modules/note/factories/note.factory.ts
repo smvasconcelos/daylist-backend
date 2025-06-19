@@ -1,4 +1,4 @@
-import { Note } from '../entities/Note';
+import { Note } from '../entities/note';
 
 type Override = Partial<Note>;
 
@@ -8,8 +8,8 @@ export const makeNote = ({ id, ...override }: Override) => {
       title: 'Dar like no video',
       userId: '123123',
       description: 'Se inscreva no canal',
-      ...override,
+      ...override
     },
-    id,
+    id
   );
 };

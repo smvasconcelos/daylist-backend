@@ -2,8 +2,8 @@ import { makeUser } from 'src/modules/user/factories/user.factory';
 import { NoteRepositoryInMemory } from '../../repositories/note.repository.memory';
 import { DeleteNoteUseCase } from './deleteNote.case';
 import { makeNote } from '../../factories/note.factory';
-import { NoteNotFoundException } from '../../exceptions/NoteNotFound.exception';
-import { NoteWithoutPermissionException } from '../../exceptions/NoteWithoutPermission.exception';
+import { NoteNotFoundException } from '../../exceptions/noteNotFound.exception';
+import { NoteWithoutPermissionException } from '../../exceptions/noteWithoutPermission.exception';
 
 let noteRepositoryInMemory: NoteRepositoryInMemory;
 let deleteNoteUseCase: DeleteNoteUseCase;
@@ -17,14 +17,14 @@ describe('Delete Note', () => {
   it('Should be able to delete note', async () => {
     const user = makeUser({});
     const note = makeNote({
-      userId: user.id,
+      userId: user.id
     });
 
     noteRepositoryInMemory.notes = [note];
 
     await deleteNoteUseCase.execute({
       noteId: note.id,
-      userId: user.id,
+      userId: user.id
     });
 
     expect(noteRepositoryInMemory.notes).toHaveLength(0);
@@ -34,7 +34,7 @@ describe('Delete Note', () => {
     expect(async () => {
       await deleteNoteUseCase.execute({
         noteId: 'fakeId',
-        userId: 'fakeId',
+        userId: 'fakeId'
       });
     }).rejects.toThrowError(NoteNotFoundException);
   });
@@ -47,7 +47,7 @@ describe('Delete Note', () => {
     expect(async () => {
       await deleteNoteUseCase.execute({
         noteId: note.id,
-        userId: 'fakeId',
+        userId: 'fakeId'
       });
     }).rejects.toThrowError(NoteWithoutPermissionException);
   });

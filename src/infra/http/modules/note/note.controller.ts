@@ -7,17 +7,17 @@ import {
   Post,
   Put,
   Query,
-  Request,
+  Request
 } from '@nestjs/common';
-import { CreateNoteUseCase } from '../../../../modules/note/useCases/createNote/createNote.case';
 import { AuthenticatedRequestModel } from '../auth/models/authenticatedRequest.model';
 import { CreateNoteBody } from './dtos/createNoteBody';
 import { NoteViewModel } from './viewModels/noteViewModel';
-import { DeleteNoteUseCase } from '../../../../modules/note/useCases/deleteNote/deleteNote.case';
-import { EditNoteUseCase } from '../../../../modules/note/useCases/editNote/editNote.case';
 import { EditNoteBody } from './dtos/editNoteBody';
-import { GetNoteUseCase } from '../../../../modules/note/useCases/getNote/getNote.case';
-import { GetManyNoteUseCase } from '../../../../modules/note/useCases/getMany/getMany.case';
+import { GetManyNoteUseCase } from 'src/modules/note/useCases/getMany/getMany.case';
+import { GetNoteUseCase } from 'src/modules/note/useCases/getNote/getNote.case';
+import { CreateNoteUseCase } from 'src/modules/note/useCases/createNote/createNote.case';
+import { DeleteNoteUseCase } from 'src/modules/note/useCases/deleteNote/deleteNote.case';
+import { EditNoteUseCase } from 'src/modules/note/useCases/editNote/editNote.case';
 
 @Controller('notes')
 export class NoteController {
@@ -26,20 +26,20 @@ export class NoteController {
     private deleteNoteUseCase: DeleteNoteUseCase,
     private editNoteUseCase: EditNoteUseCase,
     private getNoteUseCase: GetNoteUseCase,
-    private getManyNoteUseCase: GetManyNoteUseCase,
+    private getManyNoteUseCase: GetManyNoteUseCase
   ) {}
 
   @Post()
   async createNote(
     @Request() request: AuthenticatedRequestModel,
-    @Body() body: CreateNoteBody,
+    @Body() body: CreateNoteBody
   ) {
     const { title, description } = body;
 
     const user = await this.createNoteUseCase.execute({
       title,
       description,
-      userId: request.user.id,
+      userId: request.user.id
     });
 
     return NoteViewModel.toHtpp(user);
@@ -48,11 +48,11 @@ export class NoteController {
   @Delete(':id')
   async deleteNote(
     @Request() request: AuthenticatedRequestModel,
-    @Param('id') noteId: string,
+    @Param('id') noteId: string
   ) {
     await this.deleteNoteUseCase.execute({
       noteId,
-      userId: request.user.id,
+      userId: request.user.id
     });
   }
 
@@ -60,7 +60,7 @@ export class NoteController {
   async editNote(
     @Request() request: AuthenticatedRequestModel,
     @Param('id') noteId: string,
-    @Body() body: EditNoteBody,
+    @Body() body: EditNoteBody
   ) {
     const { title, description } = body;
 
@@ -68,18 +68,18 @@ export class NoteController {
       noteId,
       userId: request.user.id,
       title,
-      description,
+      description
     });
   }
 
   @Get(':id')
   async getNote(
     @Request() request: AuthenticatedRequestModel,
-    @Param('id') noteId: string,
+    @Param('id') noteId: string
   ) {
     const user = await this.getNoteUseCase.execute({
       noteId,
-      userId: request.user.id,
+      userId: request.user.id
     });
 
     return NoteViewModel.toHtpp(user);
@@ -89,14 +89,19 @@ export class NoteController {
   async getManyNote(
     @Request() request: AuthenticatedRequestModel,
     @Query('page') page: string,
-    @Query('perPage') perPage: string,
+    @Query('perPage') perPage: string
   ) {
-    const users = await this.getManyNoteUseCase.execute({
+    const { notes, total } = await this.getManyNoteUseCase.execute({
       userId: request.user.id,
       page,
-      perPage,
+      perPage
     });
 
-    return users.map(NoteViewModel.toHtpp);
+    return notes
+      ? {
+          total,
+          notes: notes.map(NoteViewModel.toHtpp)
+        }
+      : null;
   }
 }
