@@ -7,6 +7,7 @@ import { GetTaskUseCase } from 'src/modules/task/useCases/getTask/getTask.case';
 import { GetManyTaskUseCase } from 'src/modules/task/useCases/getMany/getMany.case';
 import { RemoveTaskFromNoteUseCase } from 'src/modules/task/useCases/removeFromNote/RemoveTaskFromNoteUseCase.case';
 import { TaskController } from './task.controller';
+import { CreateTaskOcurrenceUseCase } from 'src/modules/task/useCases/createTaskOcurrenceUseCase/createTaskOcurrenceUseCase.case';
 
 @Module({
   imports: [DatabaseModule],
@@ -17,7 +18,8 @@ import { TaskController } from './task.controller';
     EditTaskUseCase,
     GetTaskUseCase,
     GetManyTaskUseCase,
-    RemoveTaskFromNoteUseCase
+    RemoveTaskFromNoteUseCase,
+    CreateTaskOcurrenceUseCase
   ]
 })
 export class TaskModule {}
