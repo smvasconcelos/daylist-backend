@@ -1,14 +1,12 @@
-<center>
-  <h1>
-    Daylist
-  </h1>
-</center>
+<h1 style="text-align: center;">
+  Daylist
+</h1>
 
-<center>
+<p style="display: flex; gap: 10px; justify-content: center;">
   <img alt="Node" src="https://img.shields.io/badge/node-nest-maroon"  />
   <img alt="Prisma" src="https://img.shields.io/badge/node-prisma-blue"  />
   <img alt="Node" src="https://img.shields.io/badge/node-jest-blue"  />
-</center>
+</p>
 
 Aplicação backend desenvolvida com foco na organização pessoal, unificando funcionalidades de controle de rotina, gerenciamento financeiro, tarefas e interesses pessoais. No backend, a API é construída com NestJS, TypeScript e Prisma, utilizando PostgreSQL como banco de dados. O frontend oferece uma interface intuitiva e responsiva para o usuário acompanhar e interagir com sua vida cotidiana de forma integrada e centralizada.
 
