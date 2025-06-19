@@ -12,14 +12,27 @@ export class PrismaTagRepository implements TagRepository {
     const tagRaw = PrismaTagMapper.toPrisma(tag);
 
     await this.prisma.tag.create({
-      data: tagRaw
+      data: {
+        ...tagRaw
+      }
     });
+
+    if (tag.noteId) {
+      await this.prisma.noteTag.create({
+        data: {
+          noteId: tag.noteId,
+          tagId: tag.id
+        }
+      });
+    }
   }
 
   async findById(id: string): Promise<Tag | null> {
     const tag = await this.prisma.tag.findUnique({
-      where: {
-        id
+      where: { id },
+      include: {
+        notes: true,
+        user: true
       }
     });
 
@@ -30,21 +43,59 @@ export class PrismaTagRepository implements TagRepository {
 
   async delete(id: string): Promise<void> {
     await this.prisma.tag.delete({
+      where: { id }
+    });
+  }
+
+  async removeFromNote(tagId: string, noteId: string): Promise<void> {
+    const relationExists = await this.prisma.noteTag.findUnique({
       where: {
-        id
+        noteId_tagId: {
+          noteId: noteId,
+          tagId: tagId
+        }
       }
     });
+
+    if (relationExists) {
+      await this.prisma.noteTag.delete({
+        where: {
+          noteId_tagId: {
+            noteId: noteId,
+            tagId: tagId
+          }
+        }
+      });
+    }
   }
 
   async save(tag: Tag): Promise<void> {
     const tagRaw = PrismaTagMapper.toPrisma(tag);
 
     await this.prisma.tag.update({
-      data: tagRaw,
-      where: {
-        id: tagRaw.id
-      }
+      where: { id: tagRaw.id },
+      data: tagRaw
     });
+
+    if (tag.noteId) {
+      const relationExists = await this.prisma.noteTag.findUnique({
+        where: {
+          noteId_tagId: {
+            noteId: tag.noteId,
+            tagId: tag.id
+          }
+        }
+      });
+
+      if (!relationExists) {
+        await this.prisma.noteTag.create({
+          data: {
+            noteId: tag.noteId,
+            tagId: tag.id
+          }
+        });
+      }
+    }
   }
 
   async findMany(
@@ -54,23 +105,58 @@ export class PrismaTagRepository implements TagRepository {
     noteId?: string,
     search?: string
   ): Promise<{ tags: Tag[] | null; total: number }> {
-    const [tags, total] = await Promise.all([
-      this.prisma.tag.findMany({
-        take: perPage,
-        skip: (page - 1) * perPage,
+    let tags;
+    let total;
+
+    if (noteId) {
+      const noteTags = await this.prisma.noteTag.findMany({
         where: {
-          userId,
           noteId,
-          title: {
-            contains: search
+          tag: {
+            userId,
+            title: search ? { contains: search } : undefined
           }
         },
-        orderBy: {
-          title: 'asc'
+        include: {
+          tag: true
+        },
+        skip: (page - 1) * perPage,
+        take: perPage
+      });
+
+      tags = noteTags.map(nt => nt.tag);
+      total = await this.prisma.noteTag.count({
+        where: {
+          noteId,
+          tag: {
+            userId,
+            title: search ? { contains: search } : undefined
+          }
         }
-      }),
-      this.prisma.tag.count()
-    ]);
+      });
+
+      return {
+        total,
+        tags: tags.map(PrismaTagMapper.toDomain)
+      };
+    }
+
+    tags = await this.prisma.tag.findMany({
+      take: perPage,
+      skip: (page - 1) * perPage,
+      where: {
+        userId,
+        title: search ? { contains: search } : undefined
+      },
+      orderBy: { title: 'asc' }
+    });
+
+    total = await this.prisma.tag.count({
+      where: {
+        userId,
+        title: search ? { contains: search } : undefined
+      }
+    });
 
     return {
       total,

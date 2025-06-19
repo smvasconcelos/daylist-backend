@@ -4,28 +4,28 @@ import { TagRepository } from './tag.repository';
 export class TagRepositoryInMemory implements TagRepository {
   public tags: Tag[] = [];
 
-  async create(note: Tag): Promise<void> {
-    this.tags.push(note);
+  async create(tag: Tag): Promise<void> {
+    this.tags.push(tag);
   }
 
   async findById(id: string): Promise<Tag | null> {
-    const note = this.tags.find(note => note.id === id);
+    const tag = this.tags.find(tag => tag.id === id);
 
-    if (!note) return null;
+    if (!tag) return null;
 
-    return note;
+    return tag;
   }
 
   async delete(id: string): Promise<void> {
-    this.tags = this.tags.filter(note => note.id !== id);
+    this.tags = this.tags.filter(tag => tag.id !== id);
   }
 
-  async save(note: Tag): Promise<void> {
-    const noteIndex = this.tags.findIndex(
-      currentTag => currentTag.id === note.id
+  async save(tag: Tag): Promise<void> {
+    const tagIndex = this.tags.findIndex(
+      currentTag => currentTag.id === tag.id
     );
 
-    if (noteIndex >= 0) this.tags[noteIndex] = note;
+    if (tagIndex >= 0) this.tags[tagIndex] = tag;
   }
 
   async findMany(
@@ -50,5 +50,11 @@ export class TagRepositoryInMemory implements TagRepository {
         .slice((page - 1) * perPage, page * perPage),
       total: this.tags.length
     };
+  }
+
+  async removeFromNote(tagId: string, noteId: string): Promise<void> {
+    this.tags = this.tags.filter(item => {
+      return item.noteId !== item.noteId && item.id !== tagId;
+    });
   }
 }
