@@ -10,19 +10,23 @@ import {
   Query,
   Request
 } from '@nestjs/common';
-import { AuthenticatedRequestModel } from '../auth/models/authenticatedRequest.model';
-import { TaskViewModel } from './viewModels/taskView.model';
+import { CalendarView } from 'src/modules/task/entities/task';
 import { CreateTaskUseCase } from 'src/modules/task/useCases/createTask/createTask.case';
-import { DeleteTaskUseCase } from 'src/modules/task/useCases/deleteTask/deleteTask.case';
-import { EditTaskUseCase } from 'src/modules/task/useCases/editTask/editTask.case';
-import { GetTaskUseCase } from 'src/modules/task/useCases/getTask/getTask.case';
-import { GetManyTaskUseCase } from 'src/modules/task/useCases/getMany/getMany.case';
-import { CreateTaskBody } from './dtos/createTaskBody.dto';
-import { RemoveTaskFromNoteUseCase } from 'src/modules/task/useCases/removeFromNote/RemoveTaskFromNoteUseCase.case';
-import { RemoveTaskFromNoteBody } from './dtos/removeTaskFromNoteBody.dto';
-import { EditTaskBody } from './dtos/editTaskBody.dto';
-import { CompleteTaskBody } from './dtos/completeTask.dto';
 import { CreateTaskOcurrenceUseCase } from 'src/modules/task/useCases/createTaskOcurrenceUseCase/createTaskOcurrenceUseCase.case';
+import { DeleteTaskUseCase } from 'src/modules/task/useCases/deleteTask/deleteTask.case';
+import { DeleteTaskOcurrenceUseCase } from 'src/modules/task/useCases/deleteTaskOcurrenceUseCase/deleteTaskOcurrenceUseCase.case';
+import { EditTaskUseCase } from 'src/modules/task/useCases/editTask/editTask.case';
+import { GetManyTaskUseCase } from 'src/modules/task/useCases/getMany/getMany.case';
+import { GetTaskUseCase } from 'src/modules/task/useCases/getTask/getTask.case';
+import { GetTaskCalendarUseCase } from 'src/modules/task/useCases/getTaskCalendar/getTaskCalendar.case';
+import { RemoveTaskFromNoteUseCase } from 'src/modules/task/useCases/removeFromNote/RemoveTaskFromNoteUseCase.case';
+import { AuthenticatedRequestModel } from '../auth/models/authenticatedRequest.model';
+import { CompleteTaskBody } from './dtos/completeTask.dto';
+import { CreateTaskBody } from './dtos/createTaskBody.dto';
+import { EditTaskBody } from './dtos/editTaskBody.dto';
+import { RemoveCompleteTaskBody } from './dtos/removeCompleteTask.dto';
+import { RemoveTaskFromNoteBody } from './dtos/removeTaskFromNoteBody.dto';
+import { TaskViewModel } from './viewModels/taskView.model';
 
 @Controller('task')
 export class TaskController {
@@ -33,7 +37,9 @@ export class TaskController {
     private getTaskUseCase: GetTaskUseCase,
     private getManyTaskUseCase: GetManyTaskUseCase,
     private removeFromNote: RemoveTaskFromNoteUseCase,
-    private createTaskOcurrenceUseCase: CreateTaskOcurrenceUseCase
+    private createTaskOcurrenceUseCase: CreateTaskOcurrenceUseCase,
+    private deleteTaskOcurrenceUseCase: DeleteTaskOcurrenceUseCase,
+    private getTaskCalendarUseCase: GetTaskCalendarUseCase
   ) {}
 
   @Post()
@@ -74,7 +80,7 @@ export class TaskController {
     @Request() request: AuthenticatedRequestModel,
     @Param('id') taskId: string
   ) {
-    await this.deleteTaskUseCase.execute({
+    return await this.deleteTaskUseCase.execute({
       taskId,
       userId: request.user.id
     });
@@ -86,7 +92,7 @@ export class TaskController {
     @Param('id') taskId: string,
     @Body() body: RemoveTaskFromNoteBody
   ) {
-    await this.removeFromNote.execute({
+    return await this.removeFromNote.execute({
       taskId,
       userId: request.user.id,
       noteId: body.noteId
@@ -99,11 +105,47 @@ export class TaskController {
     @Param('id') taskId: string,
     @Body() body: CompleteTaskBody
   ) {
-    this.createTaskOcurrenceUseCase.execute({
+    return this.createTaskOcurrenceUseCase.execute({
       ...body,
       userId: request.user.id,
       taskId: taskId
     });
+  }
+
+  @Put(':id/remove-complete-task')
+  async removeCompleteTask(
+    @Request() request: AuthenticatedRequestModel,
+    @Param('id') taskId: string,
+    @Body() body: RemoveCompleteTaskBody
+  ) {
+    return this.deleteTaskOcurrenceUseCase.execute({
+      ...body,
+      userId: request.user.id,
+      taskId: taskId
+    });
+  }
+
+  @Get('get-calendar-view')
+  async getCalendarView(
+    @Request() request: AuthenticatedRequestModel,
+    @Query('calendarView') calendarView?: CalendarView,
+    @Query('date') date?: Date
+  ) {
+    const response = await this.getTaskCalendarUseCase.execute({
+      userId: request.user.id,
+      calendarView: calendarView ?? 'DAILY',
+      date: date ?? new Date()
+    });
+
+    return {
+      weekly: response.weekly
+        ? response.weekly.map(TaskViewModel.toHtpp)
+        : null,
+      monthly: response.monthly
+        ? response.monthly.map(item => item.map(TaskViewModel.toHtpp))
+        : null,
+      daily: response.daily ? response.daily.map(TaskViewModel.toHtpp) : null
+    };
   }
 
   @Put(':id')
@@ -124,7 +166,7 @@ export class TaskController {
       timesOfDay
     } = body;
 
-    await this.editTaskUseCase.execute({
+    return await this.editTaskUseCase.execute({
       description,
       durationMinutes,
       startDate,
@@ -157,13 +199,15 @@ export class TaskController {
     @Request() request: AuthenticatedRequestModel,
     @Query('page') page: string,
     @Query('perPage') perPage: string,
-    @Query('search') search: string
+    @Query('search') search?: string,
+    @Query('noteId') noteId?: string
   ) {
     const { tasks, total } = await this.getManyTaskUseCase.execute({
       userId: request.user.id,
       page,
       perPage,
-      search
+      search: search ?? '',
+      noteId
     });
 
     return tasks

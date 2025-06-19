@@ -8,13 +8,17 @@ export class TaskOccurrenceViewModel {
     dayOfWeek,
     recurrenceType,
     taskId,
+    endDate,
+    startDate,
     timeOfDay
   }: TaskOccurrence): TaskOccurrenceProps & { id: string } {
     return {
       id,
       checkedAt,
       dayOfWeek,
-      recurrenceType,
+      startDate,
+      endDate: endDate ?? undefined,
+      recurrenceType: recurrenceType ?? 'NONE',
       taskId,
       timeOfDay
     };

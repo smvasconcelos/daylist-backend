@@ -1,5 +1,7 @@
-import { Task } from '../entities/task';
+import { CalendarView, Task } from '../entities/task';
 import { CreateTaskOcurrenceUseCaseProps } from '../useCases/createTaskOcurrenceUseCase/createTaskOcurrenceUseCase.case';
+import { DeleteTaskOcurrenceUseCaseProps } from '../useCases/deleteTaskOcurrenceUseCase/deleteTaskOcurrenceUseCase.case';
+import { CalendarViewTask } from '../useCases/getTaskCalendar/getTaskCalendar.case';
 import { TaskRepository } from './task.repository';
 
 export class TaskRepositoryInMemory implements TaskRepository {
@@ -59,7 +61,22 @@ export class TaskRepositoryInMemory implements TaskRepository {
     });
   }
 
+  async getCalendarView(
+    userId: string,
+    calendarView: CalendarView
+  ): Promise<CalendarViewTask> {
+    return {
+      daily: null,
+      monthly: null,
+      weekly: null
+    };
+  }
+
   async createTaskOcurrence(
     props: CreateTaskOcurrenceUseCaseProps
+  ): Promise<void> {}
+
+  async deleteTaskOcurrence(
+    props: DeleteTaskOcurrenceUseCaseProps
   ): Promise<void> {}
 }

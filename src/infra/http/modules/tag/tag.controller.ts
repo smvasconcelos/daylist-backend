@@ -55,7 +55,7 @@ export class TagController {
     @Request() request: AuthenticatedRequestModel,
     @Param('id') tagId: string
   ) {
-    await this.deleteTagUseCase.execute({
+    return await this.deleteTagUseCase.execute({
       tagId,
       userId: request.user.id
     });
@@ -67,7 +67,7 @@ export class TagController {
     @Param('id') tagId: string,
     @Body() body: RemoveTagFromNoteBody
   ) {
-    await this.removeFromNote.execute({
+    return await this.removeFromNote.execute({
       tagId,
       userId: request.user.id,
       noteId: body.noteId
@@ -82,7 +82,7 @@ export class TagController {
   ) {
     const { title, color, noteId } = body;
 
-    await this.editTagUseCase.execute({
+    return await this.editTagUseCase.execute({
       title,
       color,
       noteId,

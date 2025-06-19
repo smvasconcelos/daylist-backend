@@ -8,6 +8,8 @@ import { GetManyTaskUseCase } from 'src/modules/task/useCases/getMany/getMany.ca
 import { RemoveTaskFromNoteUseCase } from 'src/modules/task/useCases/removeFromNote/RemoveTaskFromNoteUseCase.case';
 import { TaskController } from './task.controller';
 import { CreateTaskOcurrenceUseCase } from 'src/modules/task/useCases/createTaskOcurrenceUseCase/createTaskOcurrenceUseCase.case';
+import { GetTaskCalendarUseCase } from 'src/modules/task/useCases/getTaskCalendar/getTaskCalendar.case';
+import { DeleteTaskOcurrenceUseCase } from 'src/modules/task/useCases/deleteTaskOcurrenceUseCase/deleteTaskOcurrenceUseCase.case';
 
 @Module({
   imports: [DatabaseModule],
@@ -19,7 +21,9 @@ import { CreateTaskOcurrenceUseCase } from 'src/modules/task/useCases/createTask
     GetTaskUseCase,
     GetManyTaskUseCase,
     RemoveTaskFromNoteUseCase,
-    CreateTaskOcurrenceUseCase
+    CreateTaskOcurrenceUseCase,
+    GetTaskCalendarUseCase,
+    DeleteTaskOcurrenceUseCase
   ]
 })
 export class TaskModule {}

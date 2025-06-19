@@ -8,10 +8,14 @@ export class PrismaTaskOccurrenceMapper {
     recurrenceType,
     taskId,
     dayOfWeek,
-    timeOfDay
+    timeOfDay,
+    endDate,
+    startDate
   }: TaskOccurrence): TaskOccurrenceRaw {
     return {
       checkedAt,
+      endDate: endDate ?? null,
+      startDate,
       dayOfWeek: dayOfWeek ?? null,
       id,
       recurrenceType,
@@ -26,15 +30,21 @@ export class PrismaTaskOccurrenceMapper {
     id,
     recurrenceType,
     taskId,
-    timeOfDay
+    timeOfDay,
+    endDate,
+    startDate
   }: TaskOccurrenceRaw): TaskOccurrence {
-    return new TaskOccurrence({
-      id,
-      recurrenceType,
-      taskId,
-      checkedAt,
-      dayOfWeek,
-      timeOfDay
-    });
+    return new TaskOccurrence(
+      {
+        endDate: endDate ?? undefined,
+        startDate,
+        recurrenceType,
+        taskId,
+        checkedAt,
+        dayOfWeek,
+        timeOfDay
+      },
+      id
+    );
   }
 }

@@ -2,6 +2,7 @@ import { DayOfWeek, Recurrence } from '@prisma/client';
 import {
   ArrayUnique,
   IsArray,
+  IsDate,
   IsEnum,
   IsNumber,
   IsOptional
@@ -26,10 +27,10 @@ export class EditTaskBody {
   @IsOptional()
   noteId?: string;
 
-  @IsStringCustom()
+  @IsDate()
   startDate: Date;
 
-  @IsStringCustom()
+  @IsDate()
   @IsOptional()
   endDate?: Date;
 
