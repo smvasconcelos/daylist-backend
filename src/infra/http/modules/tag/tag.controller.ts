@@ -14,7 +14,7 @@ import { AuthenticatedRequestModel } from '../auth/models/authenticatedRequest.m
 import { TagViewModel } from './viewModels/tagView.model';
 import { CreateTagUseCase } from 'src/modules/tag/useCases/createTag/createTag.case';
 import { DeleteTagUseCase } from 'src/modules/tag/useCases/deleteTag/deleteTag.case';
-import { EditTagUseCase } from 'src/modules/tag/useCases/editTag/editNote.case';
+import { EditTagUseCase } from 'src/modules/tag/useCases/editTag/editTag.case';
 import { GetTagUseCase } from 'src/modules/tag/useCases/getTag/getTag.case';
 import { GetManyTagUseCase } from 'src/modules/tag/useCases/getMany/getMany.case';
 import { CreateTagBody } from './dtos/createTagBody.dto';

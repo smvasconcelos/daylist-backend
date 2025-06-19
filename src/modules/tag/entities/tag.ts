@@ -61,4 +61,8 @@ export class Tag {
   set title(title: string) {
     this.props.title = title;
   }
+
+  set noteId(noteId: string | null | undefined) {
+    this.props.noteId = noteId;
+  }
 }

@@ -16,7 +16,7 @@ interface EditTagRequest {
 export class EditTagUseCase {
   constructor(private tagRepository: TagRepository) {}
 
-  async execute({ color, tagId, title, userId }: EditTagRequest) {
+  async execute({ color, tagId, title, userId, noteId }: EditTagRequest) {
     const isValidHex = /^#[0-9A-Fa-f]{6}$/.test(color);
 
     if (!isValidHex) {
@@ -34,6 +34,7 @@ export class EditTagUseCase {
 
     tag.color = color;
     tag.title = title;
+    tag.noteId = noteId;
 
     await this.tagRepository.save(tag);
 
