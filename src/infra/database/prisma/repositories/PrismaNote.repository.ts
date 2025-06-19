@@ -22,6 +22,11 @@ export class PrismaNoteRepository implements NoteRepository {
         id
       },
       include: {
+        tasks: {
+          include: {
+            occurrences: true
+          }
+        },
         tags: {
           include: {
             tag: true
@@ -67,6 +72,11 @@ export class PrismaNoteRepository implements NoteRepository {
           userId
         },
         include: {
+          tasks: {
+            include: {
+              occurrences: true
+            }
+          },
           tags: {
             include: {
               tag: true
