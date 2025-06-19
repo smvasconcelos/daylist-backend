@@ -1,11 +1,13 @@
 import { Replace } from 'src/global/utils/replace.util';
 import { randomUUID } from 'crypto';
+import { Tag } from 'src/modules/tag/entities/tag';
 
 interface NoteProps {
   title: string;
   description: string | null;
   userId: string;
   createdAt: Date;
+  tags?: Tag[] | null;
 }
 
 export class Note {
@@ -36,16 +38,12 @@ export class Note {
     return this.props.title;
   }
 
-  set title(title: string) {
-    this.props.title = title;
-  }
-
   get description(): string | null {
     return this.props.description;
   }
 
-  set description(description: string | null) {
-    this.props.description = description;
+  get tags(): Tag[] | null | undefined {
+    return this.props.tags;
   }
 
   get userId(): string {
@@ -54,5 +52,17 @@ export class Note {
 
   get createdAt(): Date {
     return this.props.createdAt;
+  }
+
+  set title(title: string) {
+    this.props.title = title;
+  }
+
+  set description(description: string | null) {
+    this.props.description = description;
+  }
+
+  set tags(tags: Tag[] | null | undefined) {
+    this.props.tags = tags;
   }
 }

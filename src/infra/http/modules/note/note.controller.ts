@@ -10,9 +10,9 @@ import {
   Request
 } from '@nestjs/common';
 import { AuthenticatedRequestModel } from '../auth/models/authenticatedRequest.model';
-import { CreateNoteBody } from './dtos/createNoteBody';
-import { NoteViewModel } from './viewModels/noteViewModel';
-import { EditNoteBody } from './dtos/editNoteBody';
+import { CreateNoteBody } from './dtos/createNoteBody.dto';
+import { NoteViewModel } from './viewModels/noteView.model';
+import { EditNoteBody } from './dtos/editNoteBody.dto';
 import { GetManyNoteUseCase } from 'src/modules/note/useCases/getMany/getMany.case';
 import { GetNoteUseCase } from 'src/modules/note/useCases/getNote/getNote.case';
 import { CreateNoteUseCase } from 'src/modules/note/useCases/createNote/createNote.case';

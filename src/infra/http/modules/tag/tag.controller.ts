@@ -4,20 +4,23 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Put,
   Query,
   Request
 } from '@nestjs/common';
 import { AuthenticatedRequestModel } from '../auth/models/authenticatedRequest.model';
-import { TagViewModel } from './viewModels/tagViewModel';
+import { TagViewModel } from './viewModels/tagView.model';
 import { CreateTagUseCase } from 'src/modules/tag/useCases/createTag/createTag.case';
 import { DeleteTagUseCase } from 'src/modules/tag/useCases/deleteTag/deleteTag.case';
 import { EditTagUseCase } from 'src/modules/tag/useCases/editTag/editNote.case';
 import { GetTagUseCase } from 'src/modules/tag/useCases/getTag/getTag.case';
 import { GetManyTagUseCase } from 'src/modules/tag/useCases/getMany/getMany.case';
-import { CreateTagBody } from './dtos/createTagBody';
-import { EditTagBody } from './dtos/editTagBody';
+import { CreateTagBody } from './dtos/createTagBody.dto';
+import { EditTagBody } from './dtos/editTagBody.dto';
+import { RemoveTagFromNoteUseCase } from 'src/modules/tag/useCases/removeFromNote/RemoveTagFromNoteUseCase.case';
+import { RemoveTagFromNoteBody } from './dtos/removeTagFromNoteBody.dto';
 
 @Controller('tags')
 export class TagController {
@@ -26,7 +29,8 @@ export class TagController {
     private deleteTagUseCase: DeleteTagUseCase,
     private editTagUseCase: EditTagUseCase,
     private getTagUseCase: GetTagUseCase,
-    private getManyTagUseCase: GetManyTagUseCase
+    private getManyTagUseCase: GetManyTagUseCase,
+    private removeFromNote: RemoveTagFromNoteUseCase
   ) {}
 
   @Post()
@@ -54,6 +58,19 @@ export class TagController {
     await this.deleteTagUseCase.execute({
       tagId,
       userId: request.user.id
+    });
+  }
+
+  @Patch(':id/remove-from-note')
+  async deleteFromNote(
+    @Request() request: AuthenticatedRequestModel,
+    @Param('id') tagId: string,
+    @Body() body: RemoveTagFromNoteBody
+  ) {
+    await this.removeFromNote.execute({
+      tagId,
+      userId: request.user.id,
+      noteId: body.noteId
     });
   }
 
