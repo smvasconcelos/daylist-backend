@@ -1,13 +1,19 @@
+import { NoteRepositoryInMemory } from 'src/modules/note/repositories/note.repository.memory';
 import { TagRepositoryInMemory } from '../../repositories/tag.repository.memory';
 import { CreateTagUseCase } from './createTag.case';
 
 let tagRepositoryInMemory: TagRepositoryInMemory;
 let createTagUseCase: CreateTagUseCase;
+let noteRepositoryInMemory: NoteRepositoryInMemory;
 
 describe('Create Tag', () => {
   beforeEach(() => {
+    noteRepositoryInMemory = new NoteRepositoryInMemory();
     tagRepositoryInMemory = new TagRepositoryInMemory();
-    createTagUseCase = new CreateTagUseCase(tagRepositoryInMemory);
+    createTagUseCase = new CreateTagUseCase(
+      tagRepositoryInMemory,
+      noteRepositoryInMemory
+    );
   });
 
   it('Should be able to create tag', async () => {

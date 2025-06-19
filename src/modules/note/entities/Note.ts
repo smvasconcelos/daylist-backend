@@ -1,6 +1,7 @@
 import { Replace } from 'src/global/utils/replace.util';
 import { randomUUID } from 'crypto';
 import { Tag } from 'src/modules/tag/entities/tag';
+import { Task } from 'src/modules/task/entities/task';
 
 interface NoteProps {
   title: string;
@@ -8,6 +9,7 @@ interface NoteProps {
   userId: string;
   createdAt: Date;
   tags?: Tag[] | null;
+  tasks?: Task[] | null;
 }
 
 export class Note {
@@ -46,6 +48,10 @@ export class Note {
     return this.props.tags;
   }
 
+  get tasks() {
+    return this.props.tasks;
+  }
+
   get userId(): string {
     return this.props.userId;
   }
@@ -64,5 +70,9 @@ export class Note {
 
   set tags(tags: Tag[] | null | undefined) {
     this.props.tags = tags;
+  }
+
+  set tasks(tasks: Task[] | null | undefined) {
+    this.props.tasks = tasks;
   }
 }
