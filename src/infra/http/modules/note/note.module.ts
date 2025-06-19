@@ -15,7 +15,7 @@ import { GetNoteUseCase } from 'src/modules/note/useCases/getNote/getNote.case';
     DeleteNoteUseCase,
     EditNoteUseCase,
     GetNoteUseCase,
-    GetManyNoteUseCase,
-  ],
+    GetManyNoteUseCase
+  ]
 })
 export class NoteModule {}
