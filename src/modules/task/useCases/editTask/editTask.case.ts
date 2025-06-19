@@ -5,6 +5,7 @@ import { TaskWithoutPermissionException } from '../../exceptions/taskWithoutPerm
 import { NoteRepository } from 'src/modules/note/repositories/note.repository';
 import { NoteNotFoundException } from 'src/modules/note/exceptions/noteNotFound.exception';
 import { DayOfWeek, Recurrence } from '@prisma/client';
+import { Task } from '../../entities/task';
 
 interface EditTaskRequest {
   title: string;
@@ -27,40 +28,26 @@ export class EditTaskUseCase {
     private noteRepository: NoteRepository
   ) {}
 
-  async execute({
-    title,
-    noteId,
-    userId,
-    durationMinutes,
-    startDate,
-    daysOfWeek,
-    description,
-    endDate,
-    recurrenceType,
-    timesOfDay,
-    id
-  }: EditTaskRequest) {
-    const task = await this.taskRepository.findById(id);
+  async execute(taskToEdit: EditTaskRequest) {
+    const task = await this.taskRepository.findById(taskToEdit.id);
 
     if (!task) throw new TaskNotFoundException();
 
-    if (noteId) {
-      const note = await this.noteRepository.findById(noteId);
+    if (taskToEdit.noteId) {
+      const note = await this.noteRepository.findById(taskToEdit.noteId);
 
       if (!note) {
         throw new NoteNotFoundException();
       }
     }
 
-    if (task.userId !== userId)
+    if (task.userId !== taskToEdit.userId) {
       throw new TaskWithoutPermissionException({
         actionName: 'edit'
       });
+    }
 
-    task.title = title;
-    task.noteId = noteId;
-
-    await this.taskRepository.save(task);
+    await this.taskRepository.save(new Task(taskToEdit, taskToEdit.id));
 
     return task;
   }

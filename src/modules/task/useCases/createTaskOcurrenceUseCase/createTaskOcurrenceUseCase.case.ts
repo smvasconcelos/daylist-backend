@@ -7,9 +7,11 @@ import { DayOfWeek, Recurrence } from '@prisma/client';
 export interface CreateTaskOcurrenceUseCaseProps {
   taskId: string;
   userId: string;
-  recurrenceType: Recurrence;
+  recurrenceType?: Recurrence;
   dayOfWeek?: DayOfWeek;
   timeOfDay?: string;
+  startDate?: Date;
+  endDate?: Date;
 }
 
 @Injectable()
@@ -29,6 +31,14 @@ export class CreateTaskOcurrenceUseCase {
       });
     }
 
-    await this.taskRepository.createTaskOcurrence(props);
+    return await this.taskRepository.createTaskOcurrence({
+      recurrenceType: task.recurrenceType ?? 'NONE',
+      startDate: task.startDate as Date,
+      taskId: task.id,
+      userId: task.userId,
+      endDate: task.endDate,
+      dayOfWeek: props.dayOfWeek,
+      timeOfDay: props.dayOfWeek
+    });
   }
 }
