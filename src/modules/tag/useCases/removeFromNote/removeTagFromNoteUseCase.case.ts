@@ -5,7 +5,7 @@ import { TagRepository } from '../../repositories/tag.repository';
 import { NoteRepository } from 'src/modules/note/repositories/note.repository';
 import { NoteNotFoundException } from 'src/modules/note/exceptions/noteNotFound.exception';
 
-interface DeleteTagRequest {
+interface RemoveFromNoteRequest {
   tagId: string;
   userId: string;
   noteId: string;
@@ -18,7 +18,7 @@ export class RemoveTagFromNoteUseCase {
     private noteRepository: NoteRepository
   ) {}
 
-  async execute({ tagId, userId, noteId }: DeleteTagRequest) {
+  async execute({ tagId, userId, noteId }: RemoveFromNoteRequest) {
     const tag = await this.tagRepository.findById(tagId);
 
     if (!tag) throw new TagNotFoundException();

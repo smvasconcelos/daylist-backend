@@ -1,6 +1,7 @@
+import { DayOfWeek, Recurrence } from '@prisma/client';
 import { randomUUID } from 'crypto';
 import { Replace } from 'src/global/utils/replace.util';
-import { DayOfWeek, Recurrence } from '@prisma/client';
+import { TaskOccurrence, TaskOccurrenceProps } from './taskOcurrence';
 
 export interface TaskProps {
   title: string;
@@ -8,20 +9,16 @@ export interface TaskProps {
   userId: string;
   noteId?: string | null;
   createdAt: Date;
-  startDate: Date;
+  startDate?: Date | null;
   endDate?: Date;
+  // Recurrence type === Custom
   daysOfWeek?: DayOfWeek[];
+  // Times to repeat during the day
   timesOfDay?: string[];
   recurrenceType?: Recurrence;
   durationMinutes: number;
-  occurrences?: TaskOccurrence[];
-}
-
-interface TaskOccurrence {
-  id: string;
-  taskId: string;
-  date: Date;
-  checkedAt: Date;
+  // Checklist of occurences
+  occurrences?: TaskOccurrenceProps[];
 }
 
 export class Task {
@@ -67,7 +64,7 @@ export class Task {
     return this.props.userId;
   }
 
-  get startDate(): Date {
+  get startDate(): Date | undefined | null {
     return this.props.startDate;
   }
 
@@ -91,7 +88,7 @@ export class Task {
     return this.props.daysOfWeek;
   }
 
-  get occurrences(): TaskOccurrence[] | undefined {
+  get occurrences(): TaskOccurrenceProps[] | undefined {
     return this.props.occurrences;
   }
 
@@ -127,7 +124,7 @@ export class Task {
     this.props.endDate = endDate;
   }
 
-  set startDate(startDate: Date) {
+  set startDate(startDate: Date | undefined | null) {
     this.props.startDate = startDate;
   }
 
