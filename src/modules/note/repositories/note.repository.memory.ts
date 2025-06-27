@@ -1,4 +1,4 @@
-import { Note } from '../entities/note';
+import { Note } from '../entities/Note';
 import { NoteRepository } from './note.repository';
 
 export class NoteRepositoryInMemory implements NoteRepository {

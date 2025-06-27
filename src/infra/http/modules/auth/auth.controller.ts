@@ -9,8 +9,8 @@ import {
 } from '@nestjs/common';
 import { AuthRequestModel } from './models/authRequest.model';
 import { SignInUseCase } from '../../../../modules/auth/useCases/signIn/signIn.case';
-import { LocalAuthGuard } from './guards/localAuth.guard';
-import { Public } from './decorators/isPublic';
+import { LocalAuthGuard } from './guards/LocalAuth.guard';
+import { Public } from './decorators/IsPublic';
 
 @Controller()
 export class AuthController {

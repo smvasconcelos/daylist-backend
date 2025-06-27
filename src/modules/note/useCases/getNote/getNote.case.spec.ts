@@ -2,8 +2,8 @@ import { makeUser } from 'src/modules/user/factories/user.factory';
 import { NoteRepositoryInMemory } from '../../repositories/note.repository.memory';
 import { makeNote } from '../../factories/note.factory';
 import { GetNoteUseCase } from './getNote.case';
-import { NoteNotFoundException } from '../../exceptions/noteNotFound.exception';
-import { NoteWithoutPermissionException } from '../../exceptions/noteWithoutPermission.exception';
+import { NoteNotFoundException } from '../../exceptions/NoteNotFound.exception';
+import { NoteWithoutPermissionException } from '../../exceptions/NoteWithoutPermission.exception';
 
 let noteRepositoryInMemory: NoteRepositoryInMemory;
 let getNoteUseCase: GetNoteUseCase;

@@ -1,8 +1,8 @@
 import { compare } from 'bcrypt';
-import { UserRepositoryInMemory } from '../../repositories/user.repository.memory';
+import { UserRepositoryInMemory } from '../../repositories/User.repository.memory';
 import { CreateUserUseCase } from './createUser.case';
 import { makeUser } from '../../factories/user.factory';
-import { UserWithSameEmailException } from '../../exceptions/userWithSameEmail.exception';
+import { UserWithSameEmailException } from '../../exceptions/UserWithSameEmail.exception';
 
 let createUserUseCase: CreateUserUseCase;
 let userRepositoryInMemory: UserRepositoryInMemory;

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Note } from '../../entities/note';
+import { Note } from '../../entities/Note';
 import { NoteRepository } from '../../repositories/note.repository';
 
 interface CreateNoteRequest {

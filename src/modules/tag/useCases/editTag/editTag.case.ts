@@ -4,7 +4,7 @@ import { TagNotFoundException } from '../../exceptions/tagNotFound.exception';
 import { TagWithoutPermissionException } from '../../exceptions/tagWithoutPermission.exception';
 import { TagInvalidColor } from '../../exceptions/invalidTagColor.exception';
 import { NoteRepository } from 'src/modules/note/repositories/note.repository';
-import { NoteNotFoundException } from 'src/modules/note/exceptions/noteNotFound.exception';
+import { NoteNotFoundException } from 'src/modules/note/exceptions/NoteNotFound.exception';
 
 interface EditTagRequest {
   title: string;

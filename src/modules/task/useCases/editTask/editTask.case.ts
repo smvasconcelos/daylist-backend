@@ -3,7 +3,7 @@ import { TaskRepository } from '../../repositories/task.repository';
 import { TaskNotFoundException } from '../../exceptions/taskNotFound.exception';
 import { TaskWithoutPermissionException } from '../../exceptions/taskWithoutPermission.exception';
 import { NoteRepository } from 'src/modules/note/repositories/note.repository';
-import { NoteNotFoundException } from 'src/modules/note/exceptions/noteNotFound.exception';
+import { NoteNotFoundException } from 'src/modules/note/exceptions/NoteNotFound.exception';
 import { DayOfWeek, Recurrence } from '@prisma/client';
 import { Task } from '../../entities/task';
 

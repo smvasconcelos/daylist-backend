@@ -19,7 +19,7 @@ import { EditTaskUseCase } from 'src/modules/task/useCases/editTask/editTask.cas
 import { GetManyTaskUseCase } from 'src/modules/task/useCases/getMany/getMany.case';
 import { GetTaskUseCase } from 'src/modules/task/useCases/getTask/getTask.case';
 import { GetTaskCalendarUseCase } from 'src/modules/task/useCases/getTaskCalendar/getTaskCalendar.case';
-import { RemoveTaskFromNoteUseCase } from 'src/modules/task/useCases/removeFromNote/RemoveTaskFromNoteUseCase.case';
+import { RemoveTaskFromNoteUseCase } from 'src/modules/task/useCases/removeFromNote/removeTaskFromNoteUseCase.case';
 import { AuthenticatedRequestModel } from '../auth/models/authenticatedRequest.model';
 import { CompleteTaskBody } from './dtos/completeTask.dto';
 import { CreateTaskBody } from './dtos/createTaskBody.dto';

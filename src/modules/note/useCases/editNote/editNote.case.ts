@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { NoteRepository } from '../../repositories/note.repository';
-import { NoteNotFoundException } from '../../exceptions/noteNotFound.exception';
-import { NoteWithoutPermissionException } from '../../exceptions/noteWithoutPermission.exception';
+import { NoteNotFoundException } from '../../exceptions/NoteNotFound.exception';
+import { NoteWithoutPermissionException } from '../../exceptions/NoteWithoutPermission.exception';
 
 interface EditNoteRequest {
   title: string;

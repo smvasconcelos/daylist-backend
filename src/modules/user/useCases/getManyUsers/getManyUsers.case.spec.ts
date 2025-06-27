@@ -1,4 +1,4 @@
-import { UserRepositoryInMemory } from '../../repositories/user.repository.memory';
+import { UserRepositoryInMemory } from '../../repositories/User.repository.memory';
 import { CreateUserUseCase } from '../createUser/createUser.case';
 import { GetManyUsersUseCase } from './getManyUsers.case';
 

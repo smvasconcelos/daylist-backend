@@ -3,7 +3,7 @@ import { TagNotFoundException } from '../../exceptions/tagNotFound.exception';
 import { TagWithoutPermissionException } from '../../exceptions/tagWithoutPermission.exception';
 import { TagRepository } from '../../repositories/tag.repository';
 import { NoteRepository } from 'src/modules/note/repositories/note.repository';
-import { NoteNotFoundException } from 'src/modules/note/exceptions/noteNotFound.exception';
+import { NoteNotFoundException } from 'src/modules/note/exceptions/NoteNotFound.exception';
 
 interface RemoveFromNoteRequest {
   tagId: string;

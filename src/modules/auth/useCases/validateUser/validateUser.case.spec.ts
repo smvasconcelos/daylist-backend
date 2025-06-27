@@ -1,10 +1,10 @@
-import { User } from 'src/modules/user/entities/user';
+import { User } from 'src/modules/user/entities/User';
 import { ValidateUserUseCase } from './validateUser.case';
-import { UserRepositoryInMemory } from 'src/modules/user/repositories/user.repository.memory';
+import { UserRepositoryInMemory } from 'src/modules/user/repositories/User.repository.memory';
 import { hash } from 'bcrypt';
 import { makeUser } from 'src/modules/user/factories/user.factory';
 import { UnauthorizedException } from '@nestjs/common';
-import { AuthValuesIncorrectException } from '../../exceptions/authValuesIncorrect.exception';
+import { AuthValuesIncorrectException } from '../../exceptions/AuthValuesIncorrect.exception';
 
 let validateUserUseCase: ValidateUserUseCase;
 let userRepositoryInMemory: UserRepositoryInMemory;

@@ -19,7 +19,7 @@ import { GetTagUseCase } from 'src/modules/tag/useCases/getTag/getTag.case';
 import { GetManyTagUseCase } from 'src/modules/tag/useCases/getMany/getMany.case';
 import { CreateTagBody } from './dtos/createTagBody.dto';
 import { EditTagBody } from './dtos/editTagBody.dto';
-import { RemoveTagFromNoteUseCase } from 'src/modules/tag/useCases/removeFromNote/RemoveTagFromNoteUseCase.case';
+import { RemoveTagFromNoteUseCase } from 'src/modules/tag/useCases/removeFromNote/removeTagFromNoteUseCase.case';
 import { RemoveTagFromNoteBody } from './dtos/removeTagFromNoteBody.dto';
 
 @Controller('tags')

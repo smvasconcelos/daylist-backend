@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DayOfWeek, Recurrence } from '@prisma/client';
-import { NoteNotFoundException } from 'src/modules/note/exceptions/noteNotFound.exception';
+import { NoteNotFoundException } from 'src/modules/note/exceptions/NoteNotFound.exception';
 import { NoteRepository } from 'src/modules/note/repositories/note.repository';
 import { Task } from '../../entities/task';
 import { TaskRepository } from '../../repositories/task.repository';

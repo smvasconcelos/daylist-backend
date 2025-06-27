@@ -1,4 +1,4 @@
-import { Note } from 'src/modules/note/entities/note';
+import { Note } from 'src/modules/note/entities/Note';
 import { TagViewModel } from '../../tag/viewModels/tagView.model';
 import { TaskViewModel } from '../../task/viewModels/taskView.model';
 

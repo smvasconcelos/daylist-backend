@@ -3,7 +3,7 @@ import { TaskNotFoundException } from '../../exceptions/taskNotFound.exception';
 import { TaskWithoutPermissionException } from '../../exceptions/taskWithoutPermission.exception';
 import { TaskRepository } from '../../repositories/task.repository';
 import { NoteRepository } from 'src/modules/note/repositories/note.repository';
-import { NoteNotFoundException } from 'src/modules/note/exceptions/noteNotFound.exception';
+import { NoteNotFoundException } from 'src/modules/note/exceptions/NoteNotFound.exception';
 
 interface CreateTaskOcurrenceRequest {
   taskId: string;

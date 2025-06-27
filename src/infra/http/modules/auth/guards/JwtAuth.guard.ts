@@ -1,8 +1,8 @@
 import { ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
-import { InvalidAccessTokenException } from 'src/global/exceptions/invalidAccessToken.exception';
-import { IS_PUBLIC_KEY } from '../decorators/isPublic';
+import { InvalidAccessTokenException } from 'src/global/exceptions/InvalidAccessToken.exception';
+import { IS_PUBLIC_KEY } from '../decorators/IsPublic';
 import { Observable } from 'rxjs';
 
 @Injectable()

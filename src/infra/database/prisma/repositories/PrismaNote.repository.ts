@@ -1,7 +1,7 @@
-import { Note } from 'src/modules/note/entities/note';
+import { Note } from 'src/modules/note/entities/Note';
 import { NoteRepository } from 'src/modules/note/repositories/note.repository';
 import { PrismaService } from '../prisma.service';
-import { PrismaNoteMapper } from '../mappers/prismaNote.mapper';
+import { PrismaNoteMapper } from '../mappers/PrismaNote.mapper';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

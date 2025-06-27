@@ -1,4 +1,4 @@
-import { IsStringCustom } from 'src/infra/http/classValidator/decorators/isStringCustom';
+import { IsStringCustom } from 'src/infra/http/classValidator/decorators/IsStringCustom';
 
 export class RemoveCompleteTaskBody {
   @IsStringCustom()

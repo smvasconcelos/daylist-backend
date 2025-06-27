@@ -1,6 +1,6 @@
 import { DayOfWeek } from '@prisma/client';
 import { IsEnum, IsOptional } from 'class-validator';
-import { IsStringCustom } from 'src/infra/http/classValidator/decorators/isStringCustom';
+import { IsStringCustom } from 'src/infra/http/classValidator/decorators/IsStringCustom';
 
 export class CompleteTaskBody {
   @IsOptional()

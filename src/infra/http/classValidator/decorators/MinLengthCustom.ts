@@ -4,7 +4,7 @@ import {
   ValidationArguments,
   ValidationOptions
 } from 'class-validator';
-import { ExceptionMessage } from '../data/exceptionsMessage';
+import { ExceptionMessage } from '../data/ExceptionsMessage';
 
 export function MinLengthCustom(
   min: number,

@@ -5,7 +5,7 @@ import { DeleteTaskUseCase } from 'src/modules/task/useCases/deleteTask/deleteTa
 import { EditTaskUseCase } from 'src/modules/task/useCases/editTask/editTask.case';
 import { GetTaskUseCase } from 'src/modules/task/useCases/getTask/getTask.case';
 import { GetManyTaskUseCase } from 'src/modules/task/useCases/getMany/getMany.case';
-import { RemoveTaskFromNoteUseCase } from 'src/modules/task/useCases/removeFromNote/RemoveTaskFromNoteUseCase.case';
+import { RemoveTaskFromNoteUseCase } from 'src/modules/task/useCases/removeFromNote/removeTaskFromNoteUseCase.case';
 import { TaskController } from './task.controller';
 import { CreateTaskOcurrenceUseCase } from 'src/modules/task/useCases/createTaskOcurrenceUseCase/createTaskOcurrenceUseCase.case';
 import { GetTaskCalendarUseCase } from 'src/modules/task/useCases/getTaskCalendar/getTaskCalendar.case';

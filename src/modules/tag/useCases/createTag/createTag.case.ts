@@ -3,7 +3,7 @@ import { Tag } from '../../entities/tag';
 import { TagRepository } from '../../repositories/tag.repository';
 import { TagInvalidColor } from '../../exceptions/invalidTagColor.exception';
 import { NoteRepository } from 'src/modules/note/repositories/note.repository';
-import { NoteNotFoundException } from 'src/modules/note/exceptions/noteNotFound.exception';
+import { NoteNotFoundException } from 'src/modules/note/exceptions/NoteNotFound.exception';
 
 interface CreateTagRequest {
   title: string;
