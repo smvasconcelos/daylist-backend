@@ -23,7 +23,8 @@ describe('Get many Task', () => {
       userId: user.id
     });
 
-    expect(result).toEqual(tasks);
+    expect(result.tasks).toEqual(tasks);
+    expect(result.total).toEqual(10);
   });
 
   it('Should be able to get only user tasks', async () => {
@@ -40,7 +41,7 @@ describe('Get many Task', () => {
       userId: user1.id
     });
 
-    expect(result).toHaveLength(5);
+    expect(result.tasks).toHaveLength(5);
   });
 
   it('Should be able to control tasks per page', async () => {
@@ -55,7 +56,7 @@ describe('Get many Task', () => {
       perPage: '8'
     });
 
-    expect(result).toHaveLength(8);
+    expect(result.tasks).toHaveLength(8);
   });
 
   it('Should be able to control note page', async () => {

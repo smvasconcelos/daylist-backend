@@ -1,10 +1,11 @@
+import { makeNote } from 'src/modules/note/factories/note.factory';
+import { NoteRepositoryInMemory } from 'src/modules/note/repositories/note.repository.memory';
 import { makeUser } from 'src/modules/user/factories/user.factory';
 import { TaskNotFoundException } from '../../exceptions/taskNotFound.exception';
 import { TaskWithoutPermissionException } from '../../exceptions/taskWithoutPermission.exception';
 import { makeTask } from '../../factories/task.factory';
 import { TaskRepositoryInMemory } from '../../repositories/task.repository.memory';
 import { RemoveTaskFromNoteUseCase } from './removeTaskFromNoteUseCase.case';
-import { NoteRepositoryInMemory } from 'src/modules/note/repositories/note.repository.memory';
 
 let taskRepositoryInMemory: TaskRepositoryInMemory;
 let noteRepositoryInMemory: NoteRepositoryInMemory;
@@ -27,6 +28,7 @@ describe('Remove task from note', () => {
     });
 
     taskRepositoryInMemory.tasks = [task];
+    noteRepositoryInMemory.notes = [makeNote({ id: '123123', userId: user.id })];
 
     await removeTaskFromNoteUseCase.execute({
       taskId: task.id,
@@ -51,6 +53,7 @@ describe('Remove task from note', () => {
     const task = makeTask({});
 
     taskRepositoryInMemory.tasks = [task];
+    noteRepositoryInMemory.notes = [makeNote({ id: '123123' })];
 
     expect(async () => {
       await removeTaskFromNoteUseCase.execute({

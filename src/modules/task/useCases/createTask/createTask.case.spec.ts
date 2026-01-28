@@ -1,7 +1,7 @@
 import { NoteRepositoryInMemory } from 'src/modules/note/repositories/note.repository.memory';
+import { makeTask } from '../../factories/task.factory';
 import { TaskRepositoryInMemory } from '../../repositories/task.repository.memory';
 import { CreateTaskUseCase } from './createTask.case';
-import { makeTask } from '../../factories/task.factory';
 
 let taskRepositoryInMemory: TaskRepositoryInMemory;
 let createTaskUseCase: CreateTaskUseCase;
@@ -19,7 +19,19 @@ describe('Create Task', () => {
   it('Should be able to create task', async () => {
     expect(taskRepositoryInMemory.tasks).toEqual([]);
 
-    const task = await createTaskUseCase.execute(makeTask({ id: '123' }));
+    const taskToCreate = makeTask({ id: '123' });
+
+    const task = await createTaskUseCase.execute({
+      title: taskToCreate.title,
+      userId: taskToCreate.userId,
+      noteId: taskToCreate.noteId,
+      startDate: taskToCreate.startDate as Date,
+      endDate: taskToCreate.endDate,
+      daysOfWeek: taskToCreate.daysOfWeek,
+      timesOfDay: taskToCreate.timesOfDay,
+      recurrenceType: taskToCreate.recurrenceType,
+      durationMinutes: taskToCreate.durationMinutes
+    });
 
     expect(taskRepositoryInMemory.tasks).toEqual([task]);
   });

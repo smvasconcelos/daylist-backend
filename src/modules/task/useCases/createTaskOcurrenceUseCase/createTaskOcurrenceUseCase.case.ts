@@ -38,7 +38,7 @@ export class CreateTaskOcurrenceUseCase {
       userId: task.userId,
       endDate: task.endDate,
       dayOfWeek: props.dayOfWeek,
-      timeOfDay: props.dayOfWeek
+      timeOfDay: props.timeOfDay
     });
   }
 }

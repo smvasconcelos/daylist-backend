@@ -1,9 +1,9 @@
+import { NoteRepositoryInMemory } from 'src/modules/note/repositories/note.repository.memory';
 import { makeUser } from 'src/modules/user/factories/user.factory';
-import { TaskRepositoryInMemory } from '../../repositories/task.repository.memory';
-import { makeTask } from '../../factories/task.factory';
 import { TaskNotFoundException } from '../../exceptions/taskNotFound.exception';
 import { TaskWithoutPermissionException } from '../../exceptions/taskWithoutPermission.exception';
-import { NoteRepositoryInMemory } from 'src/modules/note/repositories/note.repository.memory';
+import { makeTask } from '../../factories/task.factory';
+import { TaskRepositoryInMemory } from '../../repositories/task.repository.memory';
 import { EditTaskUseCase } from './editTask.case';
 
 let taskRepositoryInMemory: TaskRepositoryInMemory;
@@ -23,21 +23,36 @@ describe('Edit Task', () => {
   it('Should be able to edit task', async () => {
     const user = makeUser({});
     const task = makeTask({
-      userId: user.id
+      userId: user.id,
+      id: '123'
     });
 
     taskRepositoryInMemory.tasks = [task];
 
-    const tilteChanged = 'title changed';
+    const titleChanged = 'title changed';
 
-    await editTaskUseCase.execute(makeTask({ id: '123' }));
+    await editTaskUseCase.execute({
+      id: '123',
+      userId: user.id,
+      title: titleChanged,
+      description: 'updated',
+      noteId: null,
+      startDate: new Date(),
+      durationMinutes: 10
+    });
 
-    expect(taskRepositoryInMemory.tasks[0].title).toEqual(tilteChanged);
+    expect(taskRepositoryInMemory.tasks[0].title).toEqual(titleChanged);
   });
 
   it('Should be able to throw error when not found task', async () => {
     expect(async () => {
-      await editTaskUseCase.execute(makeTask({ id: '123' }));
+      await editTaskUseCase.execute({
+        id: '123',
+        userId: 'user',
+        title: 'any',
+        startDate: new Date(),
+        durationMinutes: 10
+      });
     }).rejects.toThrow(TaskNotFoundException);
   });
 
@@ -47,7 +62,13 @@ describe('Edit Task', () => {
     taskRepositoryInMemory.tasks = [task];
 
     expect(async () => {
-      await editTaskUseCase.execute(makeTask({ id: '123' }));
+      await editTaskUseCase.execute({
+        id: task.id,
+        userId: 'fakeId',
+        title: 'any',
+        startDate: new Date(),
+        durationMinutes: 10
+      });
     }).rejects.toThrow(TaskWithoutPermissionException);
   });
 });
