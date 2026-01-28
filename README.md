@@ -9,17 +9,14 @@
   <img alt="Jest" src="https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white" />
   <img alt="PostgreSQL" src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" />
   <img alt="Insomnia" src="https://img.shields.io/badge/Insomnia-4000BF?style=for-the-badge&logo=insomnia&logoColor=white" />
+  <img alt="Docker" src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
 </p>
-
----
 
 ## 📝 Sobre o Projeto
 
 O **Daylist** é uma aplicação backend projetada para unificar e simplificar a **organização pessoal**. Com foco em produtividade e bem-estar, ele integra funcionalidades essenciais como **controle de rotina**, **gerenciamento financeiro**, **listas de tarefas** e **interesses pessoais**.
 
 Construído com **TypeScript** e **Node.js** utilizando o framework **NestJS**, o Daylist oferece uma API RESTful. A persistência de dados é gerenciada pelo **Prisma ORM**, que interage com um banco de dados **PostgreSQL**. A segurança é primordial, por isso a autenticação é implementada com **JSON Web Tokens (JWT)**, protegendo as rotas e os dados do usuário.
-
-No frontend (que interage com esta API), o usuário encontra uma interface intuitiva e responsiva para acompanhar e interagir com sua vida cotidiana de forma integrada e centralizada.
 
 ## 🚀 Tecnologias Utilizadas
 
@@ -58,7 +55,6 @@ O projeto é organizado em módulos principais, cada um com uma responsabilidade
 - **Modules** (Domínio/Aplicação): Esta é a camada central do **Domínio e Aplicação**. Aqui são implementados os **Casos de Uso (Use Cases)**, as **Entidades de Domínio**, **Agregados** e as **Regras de Negócio** centrais da aplicação. É a parte mais agnóstica a detalhes de infraestrutura e a lógica de negócio principal reside aqui. As interfaces para os repositórios também são definidas nesta camada.
 
 - **Infra** (Infraestrutura): Camada de **Infraestrutura**. Responsável por:
-
   - Implementar as **rotas da API** através dos **Controllers**, que expõem os Casos de Uso para serem consumidos pelos clientes.
 
   - Efetivar as **consultas ao banco de dados** através da implementação concreta dos **Repositórios** (definidos como interfaces na camada de `Modules`), utilizando o **Prisma ORM**.
@@ -95,50 +91,35 @@ Você pode baixar o arquivo da coleção diretamente do nosso repositório GitHu
 
 ## ⚙️ Como Rodar o Projeto
 
-Esta seção detalha os passos para configurar e executar o projeto Daylist em seu ambiente local.
+Esta seção detalha os passos para configurar e executar o projeto Daylist em seu ambiente local. Ao final de ambas as configurações a aplicação vai estar disponível em `http://localhost:3000/`.
 
-### Pré-requisitos
+### 🐳 Via Docker Compose
 
-Certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
+Ideal para rodar a aplicação completa sem configurar nada localmente:
 
-- **Node.js** (versão 22.x ou superior)
+1.  **Configure o ambiente:**
+    _Lembre-se de alterar os valores das variáveis de ambiente_
 
-- **pnpm** ou **npm** (gerenciador de pacotes)
-
-- **PostgreSQL** (banco de dados)
-
-- **Docker** (opcional, para ambiente de desenvolvimento)
-
-### Configuração do Ambiente
-
-1.  **Clone o repositório:**
     ```bash
-    git clone [https://github.com/seu-usuario/daylist.git](https://github.com/seu-usuario/daylist.git)
-    cd daylist
+    cp .env.example .env
     ```
-2.  **Instale as dependências:**
+
+2.  **Inicie os containers:**
     ```bash
-    pnpm install
-    # ou
-    npm install
+    docker-compose up --build
     ```
-3.  **Configure o Banco de Dados:**
-    - Certifique-se de que sua instância do PostgreSQL esteja rodando.
-    - Execute as migrações do Prisma para criar o schema do banco de dados:
-      ```bash
-      npx prisma migrate dev --name init
-      ```
-    - Gere o cliente Prisma:
-      ```bash
-      npx prisma generate
-      ```
+    _O serviço `app` aguardará o `postgres` estar saudável antes de rodar o `prisma db push` e iniciar o modo de desenvolvimento._
 
-### Executando a Aplicação
+### 💻 Via VS Code Dev Containers (Quick Start)
 
-Para iniciar o servidor de desenvolvimento:
+Se você deseja desenvolver dentro do container com todas as extensões configuradas:
 
-```bash
-pnpm dev
-# ou
-npm run dev
-```
+1.  Certifique-se de ter a extensão [**Dev Containers**](https://code.visualstudio.com/docs/devcontainers/containers) instalada no VS Code.
+2.  Abra a pasta do projeto.
+3.  Quando solicitado, clique em **"Reopen in Container"** (ou use o comando via `Ctrl+Shift+P`).
+4.  O VS Code configurará automaticamente o terminal, o banco de dados e as extensões de linting e formatação.
+
+### 🗄️ Fluxo de Banco de Dados
+
+- **Startup**: Ao iniciar, o container executa `npx prisma migrate deploy` (produção) ou `npx prisma db push` (dev).
+- **Seeding**: O processo de seed é definido em `prisma.config.ts` e executado automaticamente no startup do container runner.
