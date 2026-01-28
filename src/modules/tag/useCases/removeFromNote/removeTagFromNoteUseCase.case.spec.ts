@@ -1,10 +1,11 @@
+import { makeNote } from 'src/modules/note/factories/note.factory';
+import { NoteRepositoryInMemory } from 'src/modules/note/repositories/note.repository.memory';
 import { makeUser } from 'src/modules/user/factories/user.factory';
 import { TagNotFoundException } from '../../exceptions/tagNotFound.exception';
 import { TagWithoutPermissionException } from '../../exceptions/tagWithoutPermission.exception';
 import { makeTag } from '../../factories/tag.factory';
 import { TagRepositoryInMemory } from '../../repositories/tag.repository.memory';
 import { RemoveTagFromNoteUseCase } from './removeTagFromNoteUseCase.case';
-import { NoteRepositoryInMemory } from 'src/modules/note/repositories/note.repository.memory';
 
 let tagRepositoryInMemory: TagRepositoryInMemory;
 let noteRepositoryInMemory: NoteRepositoryInMemory;
@@ -27,6 +28,7 @@ describe('Remove tag from note', () => {
     });
 
     tagRepositoryInMemory.tags = [tag];
+    noteRepositoryInMemory.notes = [makeNote({ id: '123123', userId: user.id })];
 
     await removeTagFromNoteUseCase.execute({
       tagId: tag.id,
@@ -51,6 +53,7 @@ describe('Remove tag from note', () => {
     const tag = makeTag({});
 
     tagRepositoryInMemory.tags = [tag];
+    noteRepositoryInMemory.notes = [makeNote({ id: '123123' })];
 
     expect(async () => {
       await removeTagFromNoteUseCase.execute({

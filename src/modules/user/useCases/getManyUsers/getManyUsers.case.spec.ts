@@ -22,8 +22,9 @@ describe('List all users', () => {
       password: '123123'
     });
 
-    expect(getManyUsersUseCase.execute({ page: '1', perPage: '10' })).toEqual([
-      user
-    ]);
+    const result = await getManyUsersUseCase.execute({ page: '1', perPage: '10' });
+
+    expect(result.users).toEqual([user]);
+    expect(result.total).toEqual(1);
   });
 });

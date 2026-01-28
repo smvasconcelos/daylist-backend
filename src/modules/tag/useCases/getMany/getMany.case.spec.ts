@@ -1,8 +1,7 @@
 import { makeUser } from 'src/modules/user/factories/user.factory';
-import { TagRepositoryInMemory } from '../../repositories/tag.repository.memory';
 import { makeTag } from '../../factories/tag.factory';
+import { TagRepositoryInMemory } from '../../repositories/tag.repository.memory';
 import { GetManyTagUseCase } from './getMany.case';
-import { Tag } from '../../entities/tag';
 
 let tagRepositoryInMemory: TagRepositoryInMemory;
 let getManyTagUseCase: GetManyTagUseCase;
@@ -24,7 +23,8 @@ describe('Get many Tag', () => {
       userId: user.id
     });
 
-    expect(result).toEqual(tags);
+    expect(result.tags).toEqual(tags);
+    expect(result.total).toEqual(10);
   });
 
   it('Should be able to get only user tags', async () => {
@@ -41,7 +41,7 @@ describe('Get many Tag', () => {
       userId: user1.id
     });
 
-    expect(result).toHaveLength(5);
+    expect(result.tags).toHaveLength(5);
   });
 
   it('Should be able to control tags per page', async () => {
@@ -56,7 +56,7 @@ describe('Get many Tag', () => {
       perPage: '8'
     });
 
-    expect(result).toHaveLength(8);
+    expect(result.tags).toHaveLength(8);
   });
 
   it('Should be able to control note page', async () => {
