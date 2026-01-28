@@ -1,10 +1,8 @@
 import {
-  Task as TaskRaw,
   TaskOccurrence as TaskOccurrenceRaw,
-  DayOfWeek
-} from '@prisma/client';
+  Task as TaskRaw
+} from 'prisma/generated/client';
 import { Task } from 'src/modules/task/entities/task';
-import { TaskOccurrence } from 'src/modules/task/entities/taskOcurrence';
 import { PrismaTaskOccurrenceMapper } from './prismaTaskOccurrence.mapper';
 
 export class PrismaTaskMapper {

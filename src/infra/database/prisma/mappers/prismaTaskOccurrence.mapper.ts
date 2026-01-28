@@ -1,4 +1,4 @@
-import { TaskOccurrence as TaskOccurrenceRaw } from '@prisma/client';
+import { TaskOccurrence as TaskOccurrenceRaw } from 'prisma/generated/client';
 import { TaskOccurrence } from 'src/modules/task/entities/taskOcurrence';
 
 export class PrismaTaskOccurrenceMapper {

@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { DayOfWeek, Recurrence } from '@prisma/client';
+import { DayOfWeek, Recurrence } from 'prisma/generated/client';
 import { NoteNotFoundException } from 'src/modules/note/exceptions/NoteNotFound.exception';
 import { NoteRepository } from 'src/modules/note/repositories/note.repository';
 import { Task } from '../../entities/task';
-import { TaskRepository } from '../../repositories/task.repository';
 import { TaskInvalidConfiguration } from '../../exceptions/invalidTaskConfiguration.exception';
+import { TaskRepository } from '../../repositories/task.repository';
 
 interface CreateTaskRequest {
   title: string;
@@ -24,7 +24,7 @@ export class CreateTaskUseCase {
   constructor(
     private taskRepository: TaskRepository,
     private noteRepository: NoteRepository
-  ) {}
+  ) { }
 
   async execute({
     title,

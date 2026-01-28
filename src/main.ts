@@ -1,10 +1,10 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
 import { ValidationError } from 'class-validator';
-import { mapperClassValidationErrorToAppException } from './global/utils/mappers.util';
-import { ResponseInterceptor } from './global/interceptors/response.interceptor';
+import { AppModule } from './app.module';
 import { IncorrectValuesException } from './global/exceptions/IncorrectValues.exception';
+import { ResponseInterceptor } from './global/interceptors/response.interceptor';
+import { mapperClassValidationErrorToAppException } from './global/utils/mappers.util';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -18,7 +18,7 @@ async function bootstrap() {
     })
   );
   app.useGlobalInterceptors(new ResponseInterceptor());
-  await app.listen(3000);
+  await app.listen(3000, '0.0.0.0');
 }
 
 bootstrap();

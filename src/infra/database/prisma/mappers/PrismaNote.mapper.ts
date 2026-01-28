@@ -1,4 +1,4 @@
-import { Note as NoteRaw, NoteTag, Tag, Task } from '@prisma/client';
+import { Note as NoteRaw, NoteTag, Tag, Task } from 'prisma/generated/client';
 import { Note } from 'src/modules/note/entities/Note';
 import { PrismaTagMapper } from './prismaTag.mapper';
 import { PrismaTaskMapper } from './prismaTask.mapper';

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { DayOfWeek, Recurrence } from 'prisma/generated/client';
 import { TaskNotFoundException } from '../../exceptions/taskNotFound.exception';
 import { TaskWithoutPermissionException } from '../../exceptions/taskWithoutPermission.exception';
 import { TaskRepository } from '../../repositories/task.repository';
-import { DayOfWeek, Recurrence } from '@prisma/client';
 
 export interface CreateTaskOcurrenceUseCaseProps {
   taskId: string;
@@ -16,7 +16,7 @@ export interface CreateTaskOcurrenceUseCaseProps {
 
 @Injectable()
 export class CreateTaskOcurrenceUseCase {
-  constructor(private taskRepository: TaskRepository) {}
+  constructor(private taskRepository: TaskRepository) { }
 
   async execute(props: CreateTaskOcurrenceUseCaseProps) {
     const task = await this.taskRepository.findById(props.taskId);

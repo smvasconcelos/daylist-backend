@@ -1,19 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { CalendarView, Task } from 'src/modules/task/entities/task';
-import { TaskRepository } from 'src/modules/task/repositories/task.repository';
-import { PrismaTaskMapper } from '../mappers/prismaTask.mapper';
-import { PrismaService } from '../prisma.service';
-import { CreateTaskOcurrenceUseCaseProps } from 'src/modules/task/useCases/createTaskOcurrenceUseCase/createTaskOcurrenceUseCase.case';
-import { PrismaTaskOccurrenceMapper } from '../mappers/prismaTaskOccurrence.mapper';
 import { randomUUID } from 'crypto';
+import { DayOfWeek } from 'prisma/generated/client';
+import { CalendarView, Task } from 'src/modules/task/entities/task';
 import { TaskOccurrence } from 'src/modules/task/entities/taskOcurrence';
-import { CalendarViewTask } from 'src/modules/task/useCases/getTaskCalendar/getTaskCalendar.case';
-import { DayOfWeek } from '@prisma/client';
+import { TaskRepository } from 'src/modules/task/repositories/task.repository';
+import { CreateTaskOcurrenceUseCaseProps } from 'src/modules/task/useCases/createTaskOcurrenceUseCase/createTaskOcurrenceUseCase.case';
 import { DeleteTaskOcurrenceUseCaseProps } from 'src/modules/task/useCases/deleteTaskOcurrenceUseCase/deleteTaskOcurrenceUseCase.case';
+import { CalendarViewTask } from 'src/modules/task/useCases/getTaskCalendar/getTaskCalendar.case';
+import { PrismaTaskMapper } from '../mappers/prismaTask.mapper';
+import { PrismaTaskOccurrenceMapper } from '../mappers/prismaTaskOccurrence.mapper';
+import { PrismaService } from '../prisma.service';
 
 @Injectable()
 export class PrismaTaskRepository implements TaskRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(task: Task): Promise<void> {
     const taskRaw = PrismaTaskMapper.toPrisma(task);
