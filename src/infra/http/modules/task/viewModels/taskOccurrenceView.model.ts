@@ -1,4 +1,4 @@
-import { TaskOccurrence } from '@prisma/client';
+import { TaskOccurrence } from 'prisma/generated/client';
 import { TaskOccurrenceProps } from 'src/modules/task/entities/taskOcurrence';
 
 export class TaskOccurrenceViewModel {

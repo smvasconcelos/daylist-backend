@@ -1,4 +1,4 @@
-import { Tag as TagRaw } from '@prisma/client';
+import { Tag as TagRaw } from 'prisma/generated/client';
 import { Tag } from 'src/modules/tag/entities/tag';
 
 export class PrismaTagMapper {

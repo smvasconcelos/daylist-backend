@@ -1,5 +1,5 @@
-import { DayOfWeek, Recurrence } from '@prisma/client';
 import { randomUUID } from 'crypto';
+import { DayOfWeek, Recurrence } from 'prisma/generated/client';
 import { Replace } from 'src/global/utils/replace.util';
 import { TaskOccurrence, TaskOccurrenceProps } from './taskOcurrence';
 

@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { TaskRepository } from '../../repositories/task.repository';
+import { DayOfWeek, Recurrence } from 'prisma/generated/client';
+import { NoteNotFoundException } from 'src/modules/note/exceptions/NoteNotFound.exception';
+import { NoteRepository } from 'src/modules/note/repositories/note.repository';
+import { Task } from '../../entities/task';
 import { TaskNotFoundException } from '../../exceptions/taskNotFound.exception';
 import { TaskWithoutPermissionException } from '../../exceptions/taskWithoutPermission.exception';
-import { NoteRepository } from 'src/modules/note/repositories/note.repository';
-import { NoteNotFoundException } from 'src/modules/note/exceptions/NoteNotFound.exception';
-import { DayOfWeek, Recurrence } from '@prisma/client';
-import { Task } from '../../entities/task';
+import { TaskRepository } from '../../repositories/task.repository';
 
 interface EditTaskRequest {
   title: string;
@@ -26,7 +26,7 @@ export class EditTaskUseCase {
   constructor(
     private taskRepository: TaskRepository,
     private noteRepository: NoteRepository
-  ) {}
+  ) { }
 
   async execute(taskToEdit: EditTaskRequest) {
     const task = await this.taskRepository.findById(taskToEdit.id);

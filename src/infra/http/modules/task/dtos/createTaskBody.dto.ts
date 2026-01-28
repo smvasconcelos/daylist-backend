@@ -1,13 +1,12 @@
-import { DayOfWeek, Recurrence } from '@prisma/client';
 import {
   ArrayUnique,
   IsArray,
-  IsDate,
   IsEnum,
   IsNumber,
   IsOptional,
   IsString
 } from 'class-validator';
+import { DayOfWeek, Recurrence } from 'prisma/generated/client';
 import { IsNotEmptyCustom } from 'src/infra/http/classValidator/decorators/IsNotEmptyCustom';
 import { IsStringCustom } from 'src/infra/http/classValidator/decorators/IsStringCustom';
 
