@@ -1,12 +1,12 @@
+import { Injectable } from '@nestjs/common';
 import { Note } from 'src/modules/note/entities/Note';
 import { NoteRepository } from 'src/modules/note/repositories/note.repository';
-import { PrismaService } from '../prisma.service';
 import { PrismaNoteMapper } from '../mappers/PrismaNote.mapper';
-import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma.service';
 
 @Injectable()
 export class PrismaNoteRepository implements NoteRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(note: Note): Promise<void> {
     const noteRaw = PrismaNoteMapper.toPrisma(note);

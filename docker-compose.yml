@@ -29,6 +29,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: daylist_app
+    init: true
     restart: always
     ports:
       - '3000:3000'
