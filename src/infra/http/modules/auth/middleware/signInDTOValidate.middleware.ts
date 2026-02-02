@@ -1,9 +1,9 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
-import { NextFunction, Request, Response } from 'express';
-import { SignInBody } from '../dtos/SignInBody.dto';
 import { validate } from 'class-validator';
+import { NextFunction, Request, Response } from 'express';
 import { IncorrectValuesException } from 'src/global/exceptions/IncorrectValues.exception';
 import { mapperClassValidationErrorToAppException } from 'src/global/utils/mappers.util';
+import { SignInBody } from '../dtos/SignInBody.dto';
 
 @Injectable()
 export class SignInDTOValidateMiddleware implements NestMiddleware {

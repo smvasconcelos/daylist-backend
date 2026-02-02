@@ -2,6 +2,7 @@ import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from 'src/modules/auth/strategies/jwt.strategy';
 import { LocalStrategy } from 'src/modules/auth/strategies/local.strategy';
+import { RefreshTokenUseCase } from 'src/modules/auth/useCases/refreshToken/refreshToken.case';
 import { SignInUseCase } from 'src/modules/auth/useCases/signIn/signIn.case';
 import { ValidateUserUseCase } from 'src/modules/auth/useCases/validateUser/validateUser.case';
 import { DatabaseModule } from '../../../database/database.module';
@@ -21,7 +22,13 @@ import { SignInDTOValidateMiddleware } from './middleware/signInDTOValidate.midd
     }),
   ],
   controllers: [AuthController],
-  providers: [LocalStrategy, JwtStrategy, ValidateUserUseCase, SignInUseCase],
+  providers: [
+    LocalStrategy,
+    JwtStrategy,
+    ValidateUserUseCase,
+    SignInUseCase,
+    RefreshTokenUseCase
+  ],
 })
 
 export class AuthModule {

@@ -40,7 +40,7 @@ export class TaskController {
     private createTaskOcurrenceUseCase: CreateTaskOcurrenceUseCase,
     private deleteTaskOcurrenceUseCase: DeleteTaskOcurrenceUseCase,
     private getTaskCalendarUseCase: GetTaskCalendarUseCase
-  ) {}
+  ) { }
 
   @Post()
   async createTask(
@@ -134,7 +134,7 @@ export class TaskController {
     const response = await this.getTaskCalendarUseCase.execute({
       userId: request.user.id,
       calendarView: calendarView ?? 'DAILY',
-      date: date ?? new Date()
+      date: date ? new Date(date) : new Date()
     });
 
     return {
@@ -212,9 +212,9 @@ export class TaskController {
 
     return tasks
       ? {
-          total,
-          tasks: tasks.map(TaskViewModel.toHtpp)
-        }
+        total,
+        tasks: tasks.map(TaskViewModel.toHtpp)
+      }
       : null;
   }
 }
